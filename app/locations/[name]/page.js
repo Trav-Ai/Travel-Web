@@ -16,7 +16,7 @@ const LocationDetail = ({ params }) => {
   useEffect(() => {
     const fetchLocationDetails = async () => {
       try {
-        const res = await fetch('/data/dataset.csv');
+        const res = await fetch('/locationData/dataset.csv');
         if (!res.ok) {
           throw new Error('Failed to fetch data from CSV file.');
         }

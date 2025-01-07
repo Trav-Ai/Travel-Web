@@ -1,0 +1,25 @@
+
+
+.Home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    font-size: 50px;
+    margin-right: auto ;
+}
+
+.RecommendedLocations{
+    width:80%;
+    overflow: hidden;
+   padding-bottom: 20px;
+}
+
+.AllLocation{
+    width:80%;
+    overflow: hidden;
+}
+

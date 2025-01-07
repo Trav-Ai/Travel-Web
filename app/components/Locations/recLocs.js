@@ -1,50 +1,73 @@
 'use client';
+// components/RecommendedLocations.js
+
 import { useEffect, useState } from 'react';
 import Papa from 'papaparse';
-import styles from './allLocation.module.css'; // Import CSS module
+import styles from './allLocation.module.css';
 import Button from './buttons/button.js'; // Import Button component
+import Link from 'next/link';
 
-const AllLocation = () => {
+const RecommendedLocations = () => {
   const [locations, setLocations] = useState([]);
   const [userData, setUserData] = useState({
     addedLocations: [],
     likedLocations: [],
     visitedLocations: [],
   });
+  const [userRecommendations, setUserRecommendations] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Fetch user data
   useEffect(() => {
     fetch('/userData/userData.json')
-      .then((response) => response.json())
-      .then((data) => {
-        const user = data['00'] || {};
+      .then((response) => {
+        if (!response.ok) throw new Error('Failed to fetch user data.');
+        return response.json();
+      })
+      .then((userData) => {
+        const recommendations = userData['00']?.recommended || [];
+        setUserRecommendations(recommendations);
         setUserData({
-          addedLocations: user.addedLocations || [],
-          likedLocations: user.likedLocations || [],
-          visitedLocations: user.visitedLocations || [],
+          addedLocations: userData['00']?.addedLocations || [],
+          likedLocations: userData['00']?.likedLocations || [],
+          visitedLocations: userData['00']?.visitedLocations || [],
         });
       })
-      .catch((error) => {
-        console.error('Error loading user data:', error);
+      .catch((err) => {
+        setError(`User data error: ${err.message}`);
       });
   }, []);
 
-  // Fetch and parse the CSV file for location data
   useEffect(() => {
+    if (userRecommendations.length === 0) {
+      setIsLoading(false);
+      return;
+    }
+
+    // Fetch and parse the CSV file for location data
     fetch('/locationData/dataset.csv')
-      .then((response) => response.text())
+      .then((response) => {
+        if (!response.ok) throw new Error('Failed to fetch location data.');
+        return response.text();
+      })
       .then((csvText) => {
         Papa.parse(csvText, {
           complete: (result) => {
-            setLocations(result.data);
+            const filteredLocations = result.data.filter((location) =>
+              userRecommendations.includes(location.Name) // Compare by Name
+            );
+            setLocations(filteredLocations);
+            setIsLoading(false);
           },
-          header: true,
+          header: true, // Treats the first row as headers
         });
       })
-      .catch((error) => {
-        console.error('Error loading CSV data:', error);
+      .catch((err) => {
+        setError(`Location data error: ${err.message}`);
+        setIsLoading(false);
       });
-  }, []);
+  }, [userRecommendations]);
 
   const handleAction = (locationName, action) => {
     fetch('/api/updateUserData', {
@@ -92,10 +115,13 @@ const AllLocation = () => {
       });
   };
 
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p className={styles.errorMessage}>{error}</p>;
+
   return (
     <div className={styles.locationGrid}>
       {locations.length === 0 ? (
-        <p>Loading...</p>
+        <p>No locations to recommend.</p>
       ) : (
         <div className={styles.gridContainer}>
           {locations.map((location, index) => (
@@ -136,6 +162,9 @@ const AllLocation = () => {
                   isVisited={userData.visitedLocations.includes(location.Name)}
                 />
               </div>
+              <Link href={`/locations/${encodeURIComponent(location.Name)}`}>
+                <div className={styles.locationLink}>View Details</div>
+              </Link>
             </div>
           ))}
         </div>
@@ -144,4 +173,4 @@ const AllLocation = () => {
   );
 };
 
-export default AllLocation;
+export default RecommendedLocations;
