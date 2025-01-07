@@ -1,7 +1,7 @@
 import Image from "next/image";
 import AllLocation from "./components/Locations/allLocations";
 import styles from "./home.module.css"
-import RecommendedLocations from "./components/Locations/recLocs";
+import RecommendedLocations from "./components/Locations/recLocs.js";
 
 export default function Home() {
   return (

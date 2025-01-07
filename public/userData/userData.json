@@ -2,9 +2,12 @@
   "00": {
     "currentLocation": "",
     "likedLocations": [],
-    "addedLocations": [],
+    "addedLocations": [
+      "Fort Kochi"
+    ],
     "visitedLocations": [
-      "Alleppey Backwater"
+      "Alleppey Backwater",
+      "Fort Kochi"
     ],
     "recommended": [
       "Munnar",

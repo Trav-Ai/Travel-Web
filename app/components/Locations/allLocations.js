@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Papa from 'papaparse';
 import styles from './allLocation.module.css'; // Import CSS module
 import Button from './buttons/button.js'; // Import Button component
+import Link from 'next/link';
 
 const AllLocation = () => {
   const [locations, setLocations] = useState([]);
@@ -135,6 +136,10 @@ const AllLocation = () => {
                   disabled={false}
                   isVisited={userData.visitedLocations.includes(location.Name)}
                 />
+                {/* New "More Details" button to navigate to the location page */}
+                <Link href={`/locations/${encodeURIComponent(location.Name)}`} passHref>
+                  <Button label="More Details" onClick={() => {}} />
+                </Link>
               </div>
             </div>
           ))}

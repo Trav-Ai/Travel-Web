@@ -126,10 +126,12 @@ const RecommendedLocations = () => {
         <div className={styles.gridContainer}>
           {locations.map((location, index) => (
             <div key={index} className={styles.locationCard}>
-              <img src={location.url} alt={location.Name} />
-              <h3>{location.Name}</h3>
-              <p>{location.Category}</p>
-              <p>{location.Location}</p>
+              <div className={styles.locationCardContent}>
+                <img src={location.url} alt={location.Name} />
+                <h3>{location.Name}</h3>
+                <p>{location.Category}</p>
+                <p>{location.Location}</p>
+              </div>
               <div className={styles.buttons}>
                 <Button
                   label="Add"
@@ -161,10 +163,11 @@ const RecommendedLocations = () => {
                   disabled={false}
                   isVisited={userData.visitedLocations.includes(location.Name)}
                 />
+                {/* New "More Details" button to navigate to the location page */}
+                <Link href={`/locations/${encodeURIComponent(location.Name)}`} passHref>
+                  <Button label="More Details" onClick={() => {}} />
+                </Link>
               </div>
-              <Link href={`/locations/${encodeURIComponent(location.Name)}`}>
-                <div className={styles.locationLink}>View Details</div>
-              </Link>
             </div>
           ))}
         </div>
