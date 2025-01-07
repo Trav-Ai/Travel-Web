@@ -2,6 +2,7 @@ import Image from "next/image";
 import AllLocation from "./components/Locations/allLocations";
 import styles from "./home.module.css"
 import RecommendedLocations from "./components/Locations/recLocs.js";
+import ExecuteModelButton from "./components/modelButton/modelButton";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       
       <div className={styles.RecommendedLocations}>
       <h1 className={styles.title}>Recommended Locations</h1>
+      <ExecuteModelButton />
         <RecommendedLocations />
       </div>
       

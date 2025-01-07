@@ -1,17 +1,24 @@
 {
-  "00": {
-    "currentLocation": "",
-    "likedLocations": [],
-    "addedLocations": [
-      "Fort Kochi"
-    ],
-    "visitedLocations": [
-      "Alleppey Backwater",
-      "Fort Kochi"
-    ],
-    "recommended": [
-      "Munnar",
-      "Fort Kochi"
-    ]
-  }
+    "00": {
+        "currentLocation": "",
+        "likedLocations": [
+            "Munnar",
+            "Periyar Wildlife Sanctuary",
+            "Wayanad",
+            "Vellarimala",
+            "Nelliampathy"
+        ],
+        "addedLocations": [
+            "Vellarimala",
+            "Gavi"
+        ],
+        "visitedLocations": [],
+        "recommended": [
+            "Vagamon",
+            "Ponmudi",
+            "Vythiri",
+            "Nilambur",
+            "Gavi"
+        ]
+    }
 }
