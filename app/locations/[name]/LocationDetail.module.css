@@ -1,0 +1,52 @@
+/* Location Detail Page styles */
+.locationDetail {
+  background-color: #181818; /* Dark background for the detail page */
+  color: #e0e0e0; /* Light text */
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 900px;
+  margin: 20px auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.locationDetail h1 {
+  font-size: 2.5rem;
+  color: #bb86fc; /* Light purple for the title */
+  margin-bottom: 20px;
+}
+
+.locationDetail img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.locationDetail p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.locationDetail strong {
+  font-weight: bold;
+  color: #bb86fc; /* Purple color for strong tags */
+}
+
+/* Error message styling */
+.errorMessage {
+  background-color: #ff4433; /* Red background for error */
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.errorMessage h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.errorMessage p {
+  font-size: 1.1rem;
+}

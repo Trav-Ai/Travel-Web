@@ -1,0 +1,33 @@
+.locationGrid {
+    padding: 20px;
+  }
+  
+  .gridContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 20px; /* spacing between columns */
+  }
+  
+  .locationCard {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .locationCard img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .locationCard h3 {
+    font-size: 1.25rem;
+    margin: 10px 0;
+  }
+  
+  .locationCard p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
