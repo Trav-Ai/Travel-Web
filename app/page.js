@@ -2,6 +2,7 @@ import Image from "next/image";
 import AllLocation from "./components/Locations/allLocations";
 import RecommendedLocations from "./components/Locations/recLocs.js";
 import styles from "./home.module.css";
+import ChatBot from "./components/temp";
 
 export default function Home() {
   return (
@@ -54,6 +55,7 @@ export default function Home() {
         <h1 className={styles.title}>All Locations</h1>
         <AllLocation />
       </div>
+      <ChatBot />
     </div>
   );
 }
