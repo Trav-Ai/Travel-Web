@@ -2,23 +2,28 @@
     "00": {
         "currentLocation": "",
         "likedLocations": [
-            "Munnar",
-            "Periyar Wildlife Sanctuary",
-            "Wayanad",
-            "Vellarimala",
-            "Nelliampathy"
+            "Fort Kochi"
         ],
+        "addedLocations": [],
+        "visitedLocations": [],
+        "recommended": [
+            "Palakkad Fort",
+            "Beypore Port",
+            "Kottayam",
+            "Aranmula",
+            "Mayyazhi"
+        ]
+    },
+    "01": {
+        "currentLocation": "",
+        "likedLocations": [],
         "addedLocations": [
             "Vellarimala",
             "Gavi"
         ],
         "visitedLocations": [],
         "recommended": [
-            "Vagamon",
-            "Ponmudi",
-            "Vythiri",
-            "Nilambur",
-            "Gavi"
+            "Vagamon"
         ]
     }
 }
