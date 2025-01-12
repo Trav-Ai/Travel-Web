@@ -5,7 +5,11 @@ import RecommendedLocations from "./components/Locations/recLocs.js";
 import ExecuteModelButton from "./components/modelButton/modelButton";
 import LocationComponent from "./components/CurrentLocation/LocationComponent";
 
+
+const userID = "00";
+
 export default function Home() {
+
   return (
     <div className={styles.Home}>
       {/* <LocationComponent /> */}
