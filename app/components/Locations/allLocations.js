@@ -5,7 +5,7 @@ import styles from './allLocation.module.css'; // Import CSS module
 import Button from './buttons/button.js'; // Import Button component
 import Link from 'next/link';
 
-const AllLocation = () => {
+const AllLocation = ({ userID }) => {
   const [locations, setLocations] = useState([]);
   const [userData, setUserData] = useState({
     addedLocations: [],
@@ -15,20 +15,22 @@ const AllLocation = () => {
 
   // Fetch user data
   useEffect(() => {
-    fetch('/userData/userData.json')
-      .then((response) => response.json())
-      .then((data) => {
-        const user = data['00'] || {};
-        setUserData({
-          addedLocations: user.addedLocations || [],
-          likedLocations: user.likedLocations || [],
-          visitedLocations: user.visitedLocations || [],
+    if (userID) {
+      fetch('/userData/userData.json')
+        .then((response) => response.json())
+        .then((data) => {
+          const user = data[userID] || {};
+          setUserData({
+            addedLocations: user.addedLocations || [],
+            likedLocations: user.likedLocations || [],
+            visitedLocations: user.visitedLocations || [],
+          });
+        })
+        .catch((error) => {
+          console.error('Error loading user data:', error);
         });
-      })
-      .catch((error) => {
-        console.error('Error loading user data:', error);
-      });
-  }, []);
+    }
+  }, [userID]);
 
   // Fetch and parse the CSV file for location data
   useEffect(() => {
@@ -54,7 +56,7 @@ const AllLocation = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userId: '00', // Use the actual user ID
+        userId: userID, // Use the actual user ID
         location: locationName,
         action: action,
       }),
@@ -106,37 +108,41 @@ const AllLocation = () => {
               <p>{location.Category}</p>
               <p>{location.Location}</p>
               <div className={styles.buttons}>
-                <Button
-                  label="Add"
-                  onClick={() =>
-                    userData.addedLocations.includes(location.Name)
-                      ? handleAction(location.Name, 'remove')
-                      : handleAction(location.Name, 'add')
-                  }
-                  disabled={false}
-                  isAdded={userData.addedLocations.includes(location.Name)}
-                />
-                <Button
-                  label="Like"
-                  onClick={() =>
-                    userData.likedLocations.includes(location.Name)
-                      ? handleAction(location.Name, 'removeLike')
-                      : handleAction(location.Name, 'like')
-                  }
-                  disabled={false}
-                  isLiked={userData.likedLocations.includes(location.Name)}
-                />
-                <Button
-                  label="Already Visited"
-                  onClick={() =>
-                    userData.visitedLocations.includes(location.Name)
-                      ? handleAction(location.Name, 'removeVisit')
-                      : handleAction(location.Name, 'visit')
-                  }
-                  disabled={false}
-                  isVisited={userData.visitedLocations.includes(location.Name)}
-                />
-                {/* New "More Details" button to navigate to the location page */}
+                {userID && ( // Check if userID exists
+                  <>
+                    <Button
+                      label="Add"
+                      onClick={() =>
+                        userData.addedLocations.includes(location.Name)
+                          ? handleAction(location.Name, 'remove')
+                          : handleAction(location.Name, 'add')
+                      }
+                      disabled={false}
+                      isAdded={userData.addedLocations.includes(location.Name)}
+                    />
+                    <Button
+                      label="Like"
+                      onClick={() =>
+                        userData.likedLocations.includes(location.Name)
+                          ? handleAction(location.Name, 'removeLike')
+                          : handleAction(location.Name, 'like')
+                      }
+                      disabled={false}
+                      isLiked={userData.likedLocations.includes(location.Name)}
+                    />
+                    <Button
+                      label="Already Visited"
+                      onClick={() =>
+                        userData.visitedLocations.includes(location.Name)
+                          ? handleAction(location.Name, 'removeVisit')
+                          : handleAction(location.Name, 'visit')
+                      }
+                      disabled={false}
+                      isVisited={userData.visitedLocations.includes(location.Name)}
+                    />
+                  </>
+                )}
+                {/* Always show the "More Details" button */}
                 <Link href={`/locations/${encodeURIComponent(location.Name)}`} passHref>
                   <Button label="More Details" onClick={() => {}} />
                 </Link>

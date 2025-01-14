@@ -7,7 +7,7 @@ import styles from './allLocation.module.css';
 import Button from './buttons/button.js'; // Import Button component
 import Link from 'next/link';
 
-const RecommendedLocations = () => {
+const RecommendedLocations = ({ userID }) => {
   const [locations, setLocations] = useState([]);
   const [userData, setUserData] = useState({
     addedLocations: [],
@@ -18,26 +18,37 @@ const RecommendedLocations = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Debugging: Log userID
+  useEffect(() => {
+    console.log("Received userID:", userID); // Check if userID is passed
+  }, [userID]);
+
   // Fetch user data
   useEffect(() => {
-    fetch('/userData/userData.json')
-      .then((response) => {
-        if (!response.ok) throw new Error('Failed to fetch user data.');
-        return response.json();
-      })
-      .then((userData) => {
-        const recommendations = userData['00']?.recommended || [];
-        setUserRecommendations(recommendations);
-        setUserData({
-          addedLocations: userData['00']?.addedLocations || [],
-          likedLocations: userData['00']?.likedLocations || [],
-          visitedLocations: userData['00']?.visitedLocations || [],
+    if (userID) { // Only try fetching data if userID is provided
+      fetch('/userData/userData.json')
+        .then((response) => {
+          if (!response.ok) throw new Error('Failed to fetch user data.');
+          return response.json();
+        })
+        .then((userData) => {
+          const user = userData[userID] || {};
+          console.log("Fetched user data:", user); // Debugging: Check the fetched user data
+
+          const recommendations = user.recommended || [];
+          setUserRecommendations(recommendations);
+
+          setUserData({
+            addedLocations: user.addedLocations || [],
+            likedLocations: user.likedLocations || [],
+            visitedLocations: user.visitedLocations || [],
+          });
+        })
+        .catch((err) => {
+          setError(`User data error: ${err.message}`);
         });
-      })
-      .catch((err) => {
-        setError(`User data error: ${err.message}`);
-      });
-  }, []);
+    }
+  }, [userID]);
 
   useEffect(() => {
     if (userRecommendations.length === 0) {
@@ -76,7 +87,7 @@ const RecommendedLocations = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userId: '00', // Use the actual user ID
+        userId: userID, // Use the actual user ID
         location: locationName,
         action: action,
       }),
@@ -133,37 +144,41 @@ const RecommendedLocations = () => {
                 <p>{location.Location}</p>
               </div>
               <div className={styles.buttons}>
-                <Button
-                  label="Add"
-                  onClick={() =>
-                    userData.addedLocations.includes(location.Name)
-                      ? handleAction(location.Name, 'remove')
-                      : handleAction(location.Name, 'add')
-                  }
-                  disabled={false}
-                  isAdded={userData.addedLocations.includes(location.Name)}
-                />
-                <Button
-                  label="Like"
-                  onClick={() =>
-                    userData.likedLocations.includes(location.Name)
-                      ? handleAction(location.Name, 'removeLike')
-                      : handleAction(location.Name, 'like')
-                  }
-                  disabled={false}
-                  isLiked={userData.likedLocations.includes(location.Name)}
-                />
-                <Button
-                  label="Already Visited"
-                  onClick={() =>
-                    userData.visitedLocations.includes(location.Name)
-                      ? handleAction(location.Name, 'removeVisit')
-                      : handleAction(location.Name, 'visit')
-                  }
-                  disabled={false}
-                  isVisited={userData.visitedLocations.includes(location.Name)}
-                />
-                {/* New "More Details" button to navigate to the location page */}
+                {userID && ( // Check if userID exists
+                  <>
+                    <Button
+                      label="Add"
+                      onClick={() =>
+                        userData.addedLocations.includes(location.Name)
+                          ? handleAction(location.Name, 'remove')
+                          : handleAction(location.Name, 'add')
+                      }
+                      disabled={false}
+                      isAdded={userData.addedLocations.includes(location.Name)}
+                    />
+                    <Button
+                      label="Like"
+                      onClick={() =>
+                        userData.likedLocations.includes(location.Name)
+                          ? handleAction(location.Name, 'removeLike')
+                          : handleAction(location.Name, 'like')
+                      }
+                      disabled={false}
+                      isLiked={userData.likedLocations.includes(location.Name)}
+                    />
+                    <Button
+                      label="Already Visited"
+                      onClick={() =>
+                        userData.visitedLocations.includes(location.Name)
+                          ? handleAction(location.Name, 'removeVisit')
+                          : handleAction(location.Name, 'visit')
+                      }
+                      disabled={false}
+                      isVisited={userData.visitedLocations.includes(location.Name)}
+                    />
+                  </>
+                )}
+                {/* Always show the "More Details" button */}
                 <Link href={`/locations/${encodeURIComponent(location.Name)}`} passHref>
                   <Button label="More Details" onClick={() => {}} />
                 </Link>
