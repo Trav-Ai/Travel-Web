@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import os
 import warnings
 from sklearn.metrics import precision_score, recall_score, f1_score
-
+import sys
 
 # Disable TensorFlow optimizations and suppress warnings
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
@@ -97,7 +97,7 @@ def save_user_data(user_data, json_path):
 
 
 
-def main():
+def main(user_id):
     # Define paths to user data and location dataset
     user_data_path = r'C:\Users\melvi\Desktop\Travel App\travel_web\public\userData\userData.json'
     dataset_path = r'C:\Users\melvi\Desktop\Travel App\travel_web\public\locationData\dataset.csv'
@@ -109,7 +109,7 @@ def main():
     # Check if dataset or user_data is empty or None
     if dataset is None or dataset.empty or user_data is None:
         print("Error: Dataset or user data is missing or empty.")
-        return
+        return "Error: Dataset or user data is missing or empty."
 
     # Initialize the model (Sentence Transformer)
     model = SentenceTransformer('all-MiniLM-L12-v2')
@@ -119,10 +119,14 @@ def main():
 
     if not recommendations:
         print("No recommendations generated.")
-        return
+        return "No recommendations generated."
 
     # Add recommendations to user data (just append them)
-    user_key = "00"
+    if user_id not in user_data:
+        print(f"Error: User ID {user_id} not found in user data.")
+        return f"Error: User ID {user_id} not found in user data."
+
+    user_key = user_id
     if 'recommended' not in user_data[user_key]:
         user_data[user_key]["recommended"] = []
 
@@ -143,6 +147,13 @@ def main():
                             current_location.lower() == dataset[dataset['Name'] == sim_location]['Location'].values[0].lower() else ""
         print(f"  - {sim_location} (Similarity: {sim_score:.4f}) {label}")
 
+    return "Model executed successfully. Recommendations updated."  # Add success message
 
 if __name__ == '__main__':
-    main()
+    # Pass user_id as command line argument
+    if len(sys.argv) < 2:
+        print("Error: User ID not provided.")
+    else:
+        user_id = sys.argv[1]
+        result = main(user_id)
+        print(result)

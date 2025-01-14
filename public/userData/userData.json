@@ -2,28 +2,43 @@
     "00": {
         "currentLocation": "",
         "likedLocations": [
-            "Fort Kochi"
+            "Palakkad Fort",
+            "Fort Kochi",
+            "Munnar",
+            "Alleppey Backwater",
+            "Kovalam Beach",
+            "Athirappilly Waterfalls",
+            "Varkala Beach"
         ],
         "addedLocations": [],
         "visitedLocations": [],
         "recommended": [
-            "Palakkad Fort",
+            "Bekal Fort",
             "Beypore Port",
             "Kottayam",
-            "Aranmula",
-            "Mayyazhi"
+            "Napier Museum",
+            "Madayipara",
+            "Nilambur",
+            "Kumarakom Backwaters",
+            "Neyyar Dam",
+            "Wayanad"
         ]
     },
-    "01": {
+    "Melvin": {
         "currentLocation": "",
-        "likedLocations": [],
-        "addedLocations": [
-            "Vellarimala",
-            "Gavi"
+        "likedLocations": [
+            "Munnar",
+            "Wayanad",
+            "Athirappilly Waterfalls"
         ],
+        "addedLocations": [],
         "visitedLocations": [],
         "recommended": [
-            "Vagamon"
+            "Madayipara",
+            "Kumarakom Backwaters",
+            "Nilambur",
+            "Neyyar Dam",
+            "Wayanad"
         ]
     }
 }
