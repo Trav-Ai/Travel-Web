@@ -1,44 +1,41 @@
 {
-    "00": {
-        "currentLocation": "",
-        "likedLocations": [
-            "Palakkad Fort",
-            "Fort Kochi",
-            "Munnar",
-            "Alleppey Backwater",
-            "Kovalam Beach",
-            "Athirappilly Waterfalls",
-            "Varkala Beach"
-        ],
-        "addedLocations": [],
-        "visitedLocations": [],
-        "recommended": [
-            "Bekal Fort",
-            "Beypore Port",
-            "Kottayam",
-            "Napier Museum",
-            "Madayipara",
-            "Nilambur",
-            "Kumarakom Backwaters",
-            "Neyyar Dam",
-            "Wayanad"
-        ]
-    },
-    "Melvin": {
-        "currentLocation": "",
-        "likedLocations": [
-            "Munnar",
-            "Wayanad",
-            "Athirappilly Waterfalls"
-        ],
-        "addedLocations": [],
-        "visitedLocations": [],
-        "recommended": [
-            "Madayipara",
-            "Kumarakom Backwaters",
-            "Nilambur",
-            "Neyyar Dam",
-            "Wayanad"
-        ]
-    }
+  "00": {
+    "currentLocation": "",
+    "likedLocations": [],
+    "addedLocations": [],
+    "visitedLocations": [],
+    "recommended": []
+  },
+  "Melvin": {
+    "currentLocation": "Thiruvananthapuram",
+    "likedLocations": [
+      "Chembra Peak",
+      "Wayanad",
+      "Vagamon"
+    ],
+    "addedLocations": [],
+    "visitedLocations": [],
+    "recommended": [
+      "Ponmudi",
+      "Veli Tourist Village",
+      "Neyyar Dam",
+      "Anamudi Peak",
+      "Nelliampathy",
+      "Munnar",
+      "Illikkal kallu"
+    ]
+  },
+  "Nibil": {
+    "currentLocation": "Thiruvananthapuram",
+    "likedLocations": [
+      "Munnar",
+      "Wayanad",
+      "Vagamon",
+      "Varkala Beach",
+      "Kollam Beach"
+    ],
+    "addedLocations": [],
+    "visitedLocations": [],
+    "recommended": []
+  }
 }
