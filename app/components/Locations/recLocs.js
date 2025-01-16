@@ -1,6 +1,4 @@
 'use client';
-// components/RecommendedLocations.js
-
 import { useEffect, useState } from 'react';
 import Papa from 'papaparse';
 import styles from './allLocation.module.css';
@@ -23,9 +21,10 @@ const RecommendedLocations = ({ userID }) => {
     console.log("Received userID:", userID); // Check if userID is passed
   }, [userID]);
 
-  // Fetch user data
+  // Fetch user data whenever userID changes
   useEffect(() => {
     if (userID) { // Only try fetching data if userID is provided
+      setIsLoading(true); // Show loading state when new userID is received
       fetch('/userData/userData.json')
         .then((response) => {
           if (!response.ok) throw new Error('Failed to fetch user data.');
@@ -46,6 +45,7 @@ const RecommendedLocations = ({ userID }) => {
         })
         .catch((err) => {
           setError(`User data error: ${err.message}`);
+          setIsLoading(false);
         });
     }
   }, [userID]);

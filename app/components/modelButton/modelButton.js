@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 
-const ModelButton = ({ userId }) => { // userId is now passed as a prop
+const ModelButton = ({ userId, onSuccess }) => { // onSuccess is passed as a prop
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -22,6 +22,11 @@ const ModelButton = ({ userId }) => { // userId is now passed as a prop
       if (response.ok) {
         const data = await response.json();
         setMessage('Model successfully executed!');
+        
+        // Call onSuccess to notify the parent about the successful execution
+        if (onSuccess) {
+          onSuccess();  // Trigger the parent's callback to update its state
+        }
       } else {
         const errorData = await response.json();
         setMessage(errorData.message || 'Failed to execute the model.');
