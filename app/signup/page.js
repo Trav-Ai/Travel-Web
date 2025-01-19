@@ -47,7 +47,7 @@ const LoginPage = () => {
     setLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);
-      router.push('/dashboard');
+      router.push('/');
     } catch (err) {
       setError(err.message);
     } finally {
