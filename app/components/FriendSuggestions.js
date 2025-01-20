@@ -1,13 +1,24 @@
-"use client"
-import { useState, useEffect } from 'react';
-import { collection, query, where, onSnapshot, doc, updateDoc, arrayUnion, arrayRemove, getDocs, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebaseConfig';
-import { useAuth } from '@/hooks/useAuth';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { UserPlus, Users, Loader2, AlertCircle, Activity } from 'lucide-react';
+"use client";
+import { useState, useEffect } from "react";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  getDocs,
+  getDoc,
+} from "firebase/firestore";
+import { db } from "@/lib/firebaseConfig";
+import { useAuth } from "@/hooks/useAuth";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { UserPlus, Users, Loader2, AlertCircle, Activity } from "lucide-react";
 
 // Custom hook for enhanced friend suggestions
 const useEnhancedFriends = (userId) => {
@@ -20,40 +31,40 @@ const useEnhancedFriends = (userId) => {
     const fetchSuggestions = async () => {
       try {
         // Get current user's data
-        const userDocRef = doc(db, 'users', userId);
+        const userDocRef = doc(db, "users", userId);
         const userDocSnap = await getDoc(userDocRef);
         const currentUser = { id: userDocSnap.id, ...userDocSnap.data() };
         const following = currentUser.following || [];
 
         // Get all users except current user
-        const usersQuery = query(
-          collection(db, 'users'),
-        );
-        
+        const usersQuery = query(collection(db, "users"));
+
         const snapshot = await getDocs(usersQuery);
-        const users = snapshot.docs.map(doc => ({
+        const users = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-          score: 0 // Initialize score for ranking
+          score: 0, // Initialize score for ranking
         }));
 
         // Calculate suggestion scores
         const scoredUsers = users
-          .filter(user => user.id!=userId && !following.includes(user.id))
-          .map(user => {
+          .filter((user) => user.id != userId && !following.includes(user.id))
+          .map((user) => {
             let score = 0;
 
             // Factor 1: Mutual friends (highest weight)
-            const mutualFriends = (user.followers || [])
-              .filter(id => following.includes(id)).length;
+            const mutualFriends = (user.followers || []).filter((id) =>
+              following.includes(id)
+            ).length;
             score += mutualFriends * 10;
 
             // Factor 2: Activity level (medium weight)
-            const recentPosts = (user.posts || [])
-              .filter(post => {
-                const postDate = post.createdAt?.toDate();
-                return postDate && (Date.now() - postDate) < (30 * 24 * 60 * 60 * 1000);
-              }).length;
+            const recentPosts = (user.posts || []).filter((post) => {
+              const postDate = post.createdAt?.toDate();
+              return (
+                postDate && Date.now() - postDate < 30 * 24 * 60 * 60 * 1000
+              );
+            }).length;
             score += recentPosts * 5;
 
             // Factor 3: Follower count (lower weight)
@@ -66,7 +77,7 @@ const useEnhancedFriends = (userId) => {
 
         setSuggestions(scoredUsers);
       } catch (error) {
-        console.error('Error fetching suggestions:', error);
+        console.error("Error fetching suggestions:", error);
       } finally {
         setLoading(false);
       }
@@ -77,37 +88,37 @@ const useEnhancedFriends = (userId) => {
 
   const followUser = async (targetUserId) => {
     if (!userId) return;
-    
-    const currentUserRef = doc(db, 'users', userId);
-    const targetUserRef = doc(db, 'users', targetUserId);
-    
+
+    const currentUserRef = doc(db, "users", userId);
+    const targetUserRef = doc(db, "users", targetUserId);
+
     try {
       await updateDoc(currentUserRef, {
-        following: arrayUnion(targetUserId)
+        following: arrayUnion(targetUserId),
       });
       await updateDoc(targetUserRef, {
-        followers: arrayUnion(userId)
+        followers: arrayUnion(userId),
       });
     } catch (error) {
-      console.error('Error following user:', error);
+      console.error("Error following user:", error);
     }
   };
 
   const unfollowUser = async (targetUserId) => {
     if (!userId) return;
-    
-    const currentUserRef = doc(db, 'users', userId);
-    const targetUserRef = doc(db, 'users', targetUserId);
-    
+
+    const currentUserRef = doc(db, "users", userId);
+    const targetUserRef = doc(db, "users", targetUserId);
+
     try {
       await updateDoc(currentUserRef, {
-        following: arrayRemove(targetUserId)
+        following: arrayRemove(targetUserId),
       });
       await updateDoc(targetUserRef, {
-        followers: arrayRemove(userId)
+        followers: arrayRemove(userId),
       });
     } catch (error) {
-      console.error('Error unfollowing user:', error);
+      console.error("Error unfollowing user:", error);
     }
   };
 
@@ -116,7 +127,9 @@ const useEnhancedFriends = (userId) => {
 
 const FriendSuggestions = () => {
   const { user } = useAuth();
-  const { suggestions, loading, followUser, unfollowUser } = useEnhancedFriends(user?.uid);
+  const { suggestions, loading, followUser, unfollowUser } = useEnhancedFriends(
+    user?.uid
+  );
 
   if (loading) {
     return (
@@ -136,7 +149,7 @@ const FriendSuggestions = () => {
     return (
       <Alert>
         <AlertCircle className="h-4 w-4" />
-        <h1 className='text-xl font-bold'>People to follow</h1>
+        <h1 className="text-xl font-bold">People to follow</h1>
         <AlertDescription>
           No suggestions available at the moment
         </AlertDescription>
@@ -154,7 +167,8 @@ const FriendSuggestions = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {suggestions.map((suggestion) => (
-          <div
+          <a
+            href={`/profile/${suggestion.id}`}
             key={suggestion.id}
             className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
           >
@@ -194,7 +208,7 @@ const FriendSuggestions = () => {
                 Follow
               </span>
             </Button>
-          </div>
+          </a>
         ))}
       </CardContent>
     </Card>
