@@ -9,9 +9,10 @@ import {
   createUserWithEmailAndPassword
 } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import { auth,app,googleProvider } from '@/lib/firebaseConfig';
+import { auth, app, googleProvider } from '@/lib/firebaseConfig';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
-
+const db = getFirestore(app);
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -21,20 +22,52 @@ const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const router = useRouter();
 
+  const createUserDocument = async (user) => {
+    if (!user) return;
+
+    const userRef = doc(db, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      const { email, displayName, photoURL } = user;
+      const createdAt = new Date();
+
+      try {
+        await setDoc(userRef, {
+          email,
+          displayName: displayName || email.split('@')[0],
+          photoURL: photoURL || null,
+          createdAt,
+          bio: "",
+          followers: [],
+          following: [],
+          posts: 0,
+          username: email.split('@')[0]
+        });
+      } catch (error) {
+        console.error("Error creating user document:", error);
+      }
+    }
+  };
+
   const handleEmailAuth = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
+      let userCredential;
       if (isLogin) {
         // Login
-        await signInWithEmailAndPassword(auth, email, password);
+        userCredential = await signInWithEmailAndPassword(auth, email, password);
       } else {
         // Sign up
-        await createUserWithEmailAndPassword(auth, email, password);
+        userCredential = await createUserWithEmailAndPassword(auth, email, password);
       }
-      router.push('/'); 
+      
+      // Create/update user document
+      await createUserDocument(userCredential.user);
+      router.push('/');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -46,7 +79,9 @@ const LoginPage = () => {
     setError('');
     setLoading(true);
     try {
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      // Create/update user document
+      await createUserDocument(result.user);
       router.push('/');
     } catch (err) {
       setError(err.message);
