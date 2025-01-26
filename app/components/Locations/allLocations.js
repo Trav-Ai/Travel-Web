@@ -11,7 +11,7 @@ import { db } from "@/lib/firebaseConfig";
 import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { AuthProvider, useAuth } from '@/hooks/AuthContext';
 
-const AllLocation = ({ limit, currentLocation, filter }) => {
+const AllLocation = ({ limit, currentLocation, filter, searchQuery }) => {
   const { user, loading } = useAuth();
   const [userID, setUserID] = useState(null);
   const [locations, setLocations] = useState([]);
@@ -91,6 +91,46 @@ const AllLocation = ({ limit, currentLocation, filter }) => {
                 .sort((a, b) => b.Rating - a.Rating); // Sort by Ratings in descending order
             }
 
+            if (filter === 'beaches') {
+              filteredLocations = filteredLocations.filter(
+                location => location.Category && location.Category.toLowerCase() === 'beach'.toLowerCase());
+            }
+
+            if (filter === 'mountains') {
+              filteredLocations = filteredLocations.filter(
+                location => location.Category && location.Category.toLowerCase() === 'hill station'.toLowerCase());
+            }
+            
+
+            //Search Bar 
+            if (searchQuery) {
+              const sanitizedSearchQuery = searchQuery.trim().toLowerCase();
+            
+              // First, filter locations where the name starts with the query
+              let filteredByName = filteredLocations.filter(location =>
+                location.Name && location.Name.toLowerCase().startsWith(sanitizedSearchQuery)
+              );
+            
+              // If we have no results from name matching, search other fields
+              if (filteredByName.length === 0) {
+                filteredLocations = filteredLocations.filter(location => {
+                  const locationLocation = location.Location ? location.Location.toLowerCase() : "";
+                  const locationCategory = location.Category ? location.Category.toLowerCase() : "";
+                  const locationDescription = location.Description ? location.Description.toLowerCase() : "";
+            
+                  // Check other fields for matches
+                  return (
+                    locationLocation.includes(sanitizedSearchQuery) ||
+                    locationCategory.includes(sanitizedSearchQuery) ||
+                    locationDescription.includes(sanitizedSearchQuery)
+                  );
+                });
+              } else {
+                filteredLocations = filteredByName;
+              }
+            }
+            
+            
 
             // If filter is 'recommended' and userID is available, filter based on user's recommended locations
             if (filter === 'recommended' && userID) {
@@ -112,7 +152,7 @@ const AllLocation = ({ limit, currentLocation, filter }) => {
         setError('Error loading location data.');
         setIsLoading(false);
       });
-  }, [filter, currentLocation, userData.recommended, userID]); // Run this effect when filter, userData.recommended, currentLocation, or userID change
+  }, [filter, currentLocation, userData.recommended, userID, searchQuery]); // Run this effect when filter, userData.recommended, currentLocation, or userID change
 
   //Handle Button Actions
   const handleAction = (locationName, action) => {

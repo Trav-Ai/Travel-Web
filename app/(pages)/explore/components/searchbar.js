@@ -1,9 +1,17 @@
 import React from 'react';
 import styles from './searchBar.module.css';
+import { useState } from 'react';
 
 
+export default function SearchBar({ onSearch }) {
+    const [searchQuery, setSearchQuery] = useState("");
 
-export default function SearchBar() {
+    const handleSearchChange = (event) => {
+        const newSearchQuery = event.target.value;
+        setSearchQuery(newSearchQuery); // Update state with new value
+        onSearch(newSearchQuery); // Pass search query to parent component
+    };
+
     return (
         <div className={styles.group}>
             <div className={styles.container}>
@@ -14,7 +22,11 @@ export default function SearchBar() {
 
                 </svg>
 
-                <input placeholder="Search for your Perfect Destination" type="search" className={styles.input} />
+                <input placeholder="Search for your Perfect Destination" type="text" className={styles.input}
+                value={searchQuery}
+                onChange={handleSearchChange}
+                />
+
                 <button className={styles.button}>Search</button>
             </div>
 
