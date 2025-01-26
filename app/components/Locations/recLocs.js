@@ -137,51 +137,55 @@ const RecommendedLocations = ({ userID }) => {
         <div className={styles.gridContainer}>
           {locations.map((location, index) => (
             <div key={index} className={styles.locationCard}>
-              <div className={styles.locationCardContent}>
+
+              <Link href={`/locations/${encodeURIComponent(location.Name)}`} passHref>
                 <img src={location.url} alt={location.Name} />
-                <h3>{location.Name}</h3>
-                <p>{location.Category}</p>
-                <p>{location.Location}</p>
-              </div>
-              <div className={styles.buttons}>
-                {userID && ( // Check if userID exists
-                  <>
-                    <Button
-                      label="Add"
-                      onClick={() =>
-                        userData.addedLocations.includes(location.Name)
-                          ? handleAction(location.Name, 'remove')
-                          : handleAction(location.Name, 'add')
-                      }
-                      disabled={false}
-                      isAdded={userData.addedLocations.includes(location.Name)}
-                    />
-                    <Button
-                      label="Like"
-                      onClick={() =>
-                        userData.likedLocations.includes(location.Name)
-                          ? handleAction(location.Name, 'removeLike')
-                          : handleAction(location.Name, 'like')
-                      }
-                      disabled={false}
-                      isLiked={userData.likedLocations.includes(location.Name)}
-                    />
-                    <Button
-                      label="Already Visited"
-                      onClick={() =>
-                        userData.visitedLocations.includes(location.Name)
-                          ? handleAction(location.Name, 'removeVisit')
-                          : handleAction(location.Name, 'visit')
-                      }
-                      disabled={false}
-                      isVisited={userData.visitedLocations.includes(location.Name)}
-                    />
-                  </>
-                )}
-                {/* Always show the "More Details" button */}
-                <Link href={`/locations/${encodeURIComponent(location.Name)}`} passHref>
-                  <Button label="More Details" onClick={() => {}} />
-                </Link>
+              </Link>
+              <div className={styles.Content}>
+                <div className={styles.info}>
+                  <h3>{location.Name}</h3>
+                  <p>{location.Location}</p>
+                </div>
+                <div className={styles.buttons}>
+                  {userID && ( // Check if userID exists
+                    <>
+                      <Button
+                        label="Add"
+                        onClick={() =>
+                          userData.addedLocations.includes(location.Name)
+                            ? handleAction(location.Name, 'remove')
+                            : handleAction(location.Name, 'add')
+                        }
+                        disabled={false}
+                        isAdded={userData.addedLocations.includes(location.Name)}
+                      />
+                      <Button
+                        label="Like"
+                        onClick={() =>
+                          userData.likedLocations.includes(location.Name)
+                            ? handleAction(location.Name, 'removeLike')
+                            : handleAction(location.Name, 'like')
+                        }
+                        disabled={false}
+                        isLiked={userData.likedLocations.includes(location.Name)}
+                      />
+                      {/* <Button
+                        label="Already Visited"
+                        onClick={() =>
+                          userData.visitedLocations.includes(location.Name)
+                            ? handleAction(location.Name, 'removeVisit')
+                            : handleAction(location.Name, 'visit')
+                        }
+                        disabled={false}
+                        isVisited={userData.visitedLocations.includes(location.Name)}
+                      /> */}
+                    </>
+                  )}
+                  {/* Always show the "More Details" button */}
+                  {/* <Link href={`/locations/${encodeURIComponent(location.Name)}`} passHref>
+                    <Button label="More Details" onClick={() => { }} />
+                  </Link> */}
+                </div>
               </div>
             </div>
           ))}

@@ -1,0 +1,17 @@
+/* styles/explore.module.css */
+.TopDestinations {
+    width: 80vw;
+    margin: 50px auto;
+    height: 25vw;
+  }
+  
+.Title1{
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.AllDestinations{
+  width: 80vw;
+  margin: 50px auto;
+  height: 25vw;
+}

@@ -1,0 +1,6 @@
+sklearn.metrics.pairwise
+collections
+pandas
+sentence-transformers
+numpy
+scikit-learn

@@ -7,22 +7,25 @@
     "recommended": []
   },
   "Melvin": {
-    "currentLocation": "Thiruvananthapuram",
+    "currentLocation": "",
     "likedLocations": [
-      "Chembra Peak",
+      "Munnar",
       "Wayanad",
-      "Vagamon"
+      "Fort Kochi",
+      "Anamudi Peak"
     ],
-    "addedLocations": [],
+    "addedLocations": [
+      "Anamudi Peak"
+    ],
     "visitedLocations": [],
     "recommended": [
-      "Ponmudi",
-      "Veli Tourist Village",
-      "Neyyar Dam",
+      "Illikkal kallu",
       "Anamudi Peak",
       "Nelliampathy",
-      "Munnar",
-      "Illikkal kallu"
+      "Chembra Peak",
+      "Ponmudi",
+      "Palampur",
+      "Dalhousie"
     ]
   },
   "Nibil": {
@@ -37,5 +40,68 @@
     "addedLocations": [],
     "visitedLocations": [],
     "recommended": []
+  },
+  "Gaythri": {
+    "currentLocation": "",
+    "likedLocations": [
+      "Munnar",
+      "Ooty Hill Station",
+      "Wayanad",
+      "Kovalam Beach",
+      "Mattancherry Palace",
+      "Guruvayur Temple",
+      "Kumarakom",
+      "Beypore Beach"
+    ],
+    "addedLocations": [],
+    "visitedLocations": [],
+    "recommended": [
+      "Vellarimala",
+      "Vythiri",
+      "Veli Tourist Village",
+      "Madayipara",
+      "Neyyar Dam",
+      "Varkala Beach",
+      "Hanging Gardens"
+    ]
+  },
+  "Johann": {
+    "currentLocation": "",
+    "likedLocations": [
+      "Athirappilly Waterfalls",
+      "Munnar",
+      "Edakkal Caves",
+      "Munroe Island"
+    ],
+    "addedLocations": [],
+    "visitedLocations": [],
+    "recommended": [
+      "Vellarimala",
+      "Thenmala",
+      "Madayipara",
+      "Soochipara Falls",
+      "Vythiri",
+      "Meenmutty Waterfalls",
+      "Palaruvi Waterfalls"
+    ]
+  },
+  "test": {
+    "currentLocation": "",
+    "likedLocations": [
+      "Kovalam Beach"
+    ],
+    "addedLocations": [
+      "Alleppey Beach"
+    ],
+    "visitedLocations": [],
+    "recommended": [
+      "Alleppey Beach",
+      "Kollam Beach",
+      "Kozhikode Beach",
+      "Beypore Beach",
+      "Shanghumukham Beach",
+      "Azhikkal Beach",
+      "Chavakkad Beach"
+    ]
   }
 }

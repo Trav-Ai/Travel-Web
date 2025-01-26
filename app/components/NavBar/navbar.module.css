@@ -1,41 +1,97 @@
-
 .navbar {
   background-color: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 1.875rem; /* 20px 30px */
-  box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.1); /* 0 2px 10px */
-  position:relative;
+  padding: 1.25rem 10vw;
+  position: relative;
   top: 0;
   width: 100%;
   z-index: 1000;
- 
 }
 
 .navTitle {
-  font-size: 1.5rem; /* 1.8rem */
+  font-size: 1.3rem;
   font-weight: bold;
   color: black;
-  
+  text-wrap: nowrap;
 }
 
 .navLinks {
   display: flex;
-  gap: 1.5625rem; /* 25px */
+  gap: clamp(1px, 3.3vw, 45px);
+  font-size: 15px;
+}
+
+.ctoButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
 }
 
 .navButton {
-  font-size: 0.8rem;
+  font-size: 13px;
   color: white;
   text-decoration: none;
-  padding: 0.3125rem 1.0625rem;
-  border-radius: 0.3125rem;
+  padding: 8px 30px;
+  border-radius: 8px;
   background-color: black;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navButtonSignup {
+  font-size: 13px;
+  text-decoration: none;
 }
 
 .navButton:hover {
   background-color: #555;
   color: white;
+}
+
+/* Hamburger Icon */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger .line {
+  width: 25px;
+  height: 3px;
+  background-color: black;
+  transition: all 0.3s ease;
+}
+
+/* Media Queries for Mobile */
+@media screen and (max-width: 768px) {
+  /* Hide nav links in mobile */
+  .navLinks {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  /* Show hamburger icon */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Show nav links when the hamburger icon is clicked */
+  .navLinks.open {
+    display: flex;
+  }
+
+  .ctoButtons {
+    display: none;
+    gap: 18px;
+  }
 }
