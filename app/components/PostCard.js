@@ -28,7 +28,8 @@ const PostCard = ({ post, onLike, onComment }) => {
 
   return (
     <Card className="overflow-hidden">
-      <CardHeader className="flex flex-row items-center gap-4">
+      <CardHeader  className="flex flex-row items-center gap-4 ">
+        <a href={`/profile/${post.userId}`} className="flex flex-row items-center gap-4 ">
         <Avatar>
           <AvatarImage src={post.userPhotoURL} alt={post.username || 'User'} />
           <AvatarFallback>{post.username?.[0]?.toUpperCase() || 'U'}</AvatarFallback>
@@ -37,6 +38,7 @@ const PostCard = ({ post, onLike, onComment }) => {
           <p className="font-medium">{post.username || 'Anonymous'}</p>
           
         </div>
+        </a>
       </CardHeader>
 
       {post.imageUrl && (
