@@ -1,0 +1,46 @@
+
+.banner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 25vw;
+    margin: 0;
+}
+
+.h1Text {
+    position: relative;
+    top:2vw;
+    font-size: 11vw;
+    font-weight: 800;
+    background: linear-gradient(to top, transparent, rgb(204, 204, 204));
+    -webkit-background-clip: text;
+    color: transparent;
+    font-family: 'Poppins', sans-serif;
+}
+
+.h6Text{
+    position: relative;
+    top: -8vw;
+    font-size: clamp(0.8rem, 1.3vw, 1.3rem);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.h2Text{
+    position: relative;
+    top: -7.5vw;
+    font-size: clamp(2rem, 4.2vw,4.2rem);
+    text-align: center;
+    font-weight: 800; /* Ensures bold weight */
+    line-height: clamp(2.5rem, 5.5vw, 8rem);
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+
+}
+
+.pText{
+    position: relative;
+    top: -6vw;
+    font-size: clamp(0.5rem,1.3vw,1.2rem);
+}

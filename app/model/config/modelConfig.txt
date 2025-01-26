@@ -1,0 +1,1 @@
+from the input location or locations, find 10 similar locations based on the type of location and return the output with only their location names

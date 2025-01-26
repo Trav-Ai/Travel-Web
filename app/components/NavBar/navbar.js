@@ -1,79 +1,100 @@
 'use client'
 import React, { useState } from 'react';
 import styles from './navbar.module.css'; // Importing the CSS module for styling
+import Link from 'next/link';
+import { logout } from '@/hooks/auth';
+import { AuthProvider, useAuth } from '@/hooks/AuthContext';
+import { useEffect } from 'react';
 
-const Navbar = ({ onLogin }) => { 
+const Navbar = ({ }) => {
 
-  
+  const { user, loading } = useAuth();
   const [isMobile, setIsMobile] = useState(false); // For mobile menu toggle
-  const [isLoginVisible, setIsLoginVisible] = useState(false); // For controlling the input field visibility
-  const [userID, setUserID] = useState(''); // For storing the user input
   const [isLoggedIn, setIsLoggedIn] = useState(false); // For tracking login status
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMobile(!isMobile);
   };
 
-  const handleLoginClick = () => {
-    setIsLoginVisible(true); // Show login form when login button is clicked
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prevState) => !prevState);
   };
 
-  const handleInputChange = (event) => {
-    setUserID(event.target.value); // Update userID state with the input
+  const handleLogout = async () => {
+    try {
+ 
+      await logout(); // Call your logout function from the auth file
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.error('Logout error:', error.message);
+    }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onLogin(userID); // Passing userID to the parent component
-    setIsLoggedIn(true); // Mark user as logged in
-    setIsLoginVisible(false); // Hide the login form after submission
-  };
+  useEffect(() => {
+    if (user) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [user]);
 
-  const handleLogout = () => {
-    setIsLoggedIn(false); // Mark user as logged out
-    setUserID(''); // Clear userID
-    window.location.reload();
-  };
 
   return (
-    <nav className={styles.navbar}>
-      <h1 className={styles.navTitle}>Ai Travel App</h1>
-      <div className={styles.navLinks}>
-        <button className={styles.navCom}>Home</button>
-        <button className={styles.navCom}>Itinerary</button>
-        <button className={styles.navCom}>Social</button>
+    <AuthProvider>
+      <nav className={styles.navbar}>
+        <h1 className={styles.navTitle}>Ai Travel App</h1>
 
-        {/* Conditionally render Sign Up / Login buttons */}
-        {!isLoggedIn && (
-          <>
-            <button className={styles.navButton}>Sign Up</button>
-            <button className={styles.navButton} onClick={handleLoginClick}>Login</button>
-          </>
-        )}
+        <div className={styles.navLinks}>
+          <Link href="/">
+            <button className={styles.navCom}>Home</button>
+          </Link>
+          <Link href="/explore">
+            <button className={styles.navCom}>Explore</button>
+          </Link>
 
-        {/* Conditionally render Logout button and username */}
-        {isLoggedIn && (
-          <>
-            <span className={styles.userName}>Welcome, {userID}</span> {/* Display the logged-in user's name */}
-            <button className={styles.navButton} onClick={handleLogout}>Logout</button>
-          </>
-        )}
-      </div>
+          <button className={styles.navCom}>Itinerary</button>
+          <Link href="/social">
+            <button className={styles.navCom}>Social</button>
+          </Link>
+        </div>
 
-      {/* Conditionally render the login input field */}
-      {isLoginVisible && !isLoggedIn && (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Enter User ID"
-            value={userID}
-            onChange={handleInputChange}
-            className={styles.loginInput}
-          />
-          <button type="submit" className={styles.navButton}>Submit</button>
-        </form>
-      )}
-    </nav>
+        {loading && <p>Loading...</p>}
+        {!loading &&
+        <div className={styles.ctoButtons}>
+          {!isLoggedIn && (
+            <> 
+              <Link href='/signup'>
+                <button className={styles.navButtonSignup}>Sign Up</button>
+              </Link>
+              <Link href='/signup'>
+                <button className={styles.navButton}>Login</button>
+              </Link>
+            </>
+          )}
+
+          {isLoggedIn && (
+            <>
+              <button className={styles.userName} onClick={toggleDropdown}>{user.username}</button>
+              {isDropdownOpen && (
+              <div className="dropdown-menu">
+                <button onClick={handleLogout} className={styles.logout}>
+                  Logout
+                </button>
+              </div>
+              )}
+            </>
+          )}
+        </div>
+        }
+
+        <div className={styles.hamburger}>
+          <div className={styles.line}></div>
+          <div className={styles.line}></div>
+          <div className={styles.line}></div>
+        </div>
+      </nav>
+    </AuthProvider>
   );
 };
 

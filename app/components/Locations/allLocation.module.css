@@ -1,45 +1,68 @@
 .locationGrid {
+margin: auto;
 }
 
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Automatically adjust the number of columns */
-  gap: 20px; /* Spacing between columns */
+  grid-template-columns: repeat(4, 1fr);
+  gap:25px; /* Automatically adjust the number of columns */
+  justify-items: stretch; /* Make sure items fill their grid cells */
+  justify-content: start; /* Align the entire grid to the left */
+  width: 100%; /* Ensure full width */
 }
 
+
 .locationCard {
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding subtle shadow for card */
-  display: flex;
+  text-align: left;
+  display: flex; 
   flex-direction: column;
-  justify-content: space-between; /* Ensure space between image/content and buttons */
-  height: 500px;
-  max-width: 300px; /* Set a fixed height for the card */
+  height:265px;
+  width: clamp(200px, 18.3vw, 310px); /* Set a fixed height for the card */
 }
 
 .locationCard img {
   max-width: 100%;
-  height: auto;
-  border-radius: 8px;
+  height: 15.7vw;
+  border-radius:1.5rem;
+  object-fit: cover;  
 }
 
+.Content{
+  display: flex;
+  justify-content: space-between;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+}
+
+
 .locationCard h3 {
-  font-size: 1.25rem;
-  margin: 10px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-left: 5px;
+  max-width:200px;
+  overflow: hidden;      
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #333;
 }
 
 .locationCard p {
-  font-size: 1rem;
+  max-width:200px;
+  overflow: hidden;      
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: -1px;
+  margin-left: 5px;
+  font-size: 0.9rem;
   color: #555;
   flex-grow: 1; /* Allow text to grow and take available space */
 }
 
-/* Container for the buttons inside the card */
+Container for the buttons inside the card
 .buttonsContainer {
   display: flex;
   justify-content: space-around; /* Spread buttons evenly */
@@ -52,7 +75,7 @@
 }
 
 /* Button styles */
-.buttonsContainer button {
+/* .buttonsContainer button {
   background-color: transparent;
   border: 1px solid #0070f3;
   color: #0070f3;
@@ -68,7 +91,6 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Hover and active state styling */
 .buttonsContainer button:hover {
   background-color: #0070f3;
   color: white;
@@ -85,8 +107,8 @@
   cursor: not-allowed;
 }
 
-/* Button focus outline (optional) */
+
 .buttonsContainer button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px #0070f3; /* Add a glow effect on focus */
-}
+  box-shadow: 0 0 0 2px #0070f3; 
+} */

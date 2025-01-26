@@ -14,13 +14,12 @@ const Button = ({ label, onClick, disabled, isAdded, isLiked, isVisited }) => {
         onClick={onClick}
         disabled={disabled}
         style={{
-          padding: '10px 20px',
           borderRadius: '8px',
           cursor: 'pointer',
-          backgroundColor: disabled ? 'gray' : backgroundColor,
-          color: 'white',
+          color: disabled ? 'gray' : backgroundColor,
           border: 'none',
           margin: '5px',
+          marginTop: '15px'
         }}
       >
         {label}

@@ -1,3 +1,6 @@
+from flask import Flask, jsonify, request
+from flask_cors import CORS  # Import CORS
+import subprocess
 import json
 import pandas as pd
 from sentence_transformers import SentenceTransformer
@@ -10,8 +13,41 @@ from collections import defaultdict
 from datetime import datetime
 
 
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
-warnings.filterwarnings('ignore', category=UserWarning, module='tensorflow')
+
+
+#<<<<<<<<<<< API Route >>>>>>>>>>>>>>
+
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all domains (or restrict to specific domains)
+
+@app.route('/execute-model', methods=['POST'])
+def execute_model():
+    try:
+        # Get the user_id from the POST request
+        user_id = request.json.get('user_id')
+        
+        if not user_id:
+            return jsonify({"message": "User ID is required!"}), 400
+        
+        # Call the model.py script with the user_id
+        # result = subprocess.run(
+        #     ['python', 'model/knn_CF.py', user_id], 
+        #     capture_output=True, text=True, check=True
+        # )
+
+        result = run_model(user_id)
+ 
+        return jsonify({"message": "Executed Sucessfully"}), 200
+
+    except subprocess.CalledProcessError as e:
+        return jsonify({"message": "Failed to execute the model.", "error": str(e)}), 500
+
+
+
+
+
+
+#<<<<<<<<<<< AI Model >>>>>>>>>>>>>>
 
 def load_dataset(csv_path):
     try:
@@ -176,6 +212,20 @@ def seasons_overlap(season1, season2):
 
 #     return top_similar_locations
 
+def llm_model(user_id, user_data_path):
+    try:
+        user_data = load_user_data(user_data_path, user_id)
+        user = user_data.get(user_id, {})
+
+        locations = user.get("likedLocations", [])
+        result = subprocess.run(
+            ['python', 'recc.py'] + locations,
+            capture_output=True, text=True, check=True
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        print(f"Error while running the llm model{e}")
+        return None
 
 def calculate_location_distance(currentLocation, location):
 
@@ -295,7 +345,7 @@ def knn_cosine(user_id, user_data, dataset, model, top_k=5):
     similarities = []
 
     #<<<<< Distance Factor >>>>>>>
-    distance_weight_factor = 0.38
+    distance_weight_factor = 0.41
     #<<<<< Distance Factor >>>>>>>
 
     for name, location_data in location_embeddings.items():
@@ -458,10 +508,10 @@ def evaluate_model(user_id, user_data_path, dataset_path, test_data_path, top_k=
     print(f"\nEvaluation results of the model")
     print(f"Precision: {precision:.4f}")
     print(f"Recall: {recall:.4f}")
-    print(f"F1-Score: {f1_score_value:.4f}")
+    #print(f"F1-Score: {f1_score_value:.4f}")
 
 
-def main(user_id):
+def knn_model(user_id):
     user_data_path = r'C:\Users\melvi\Desktop\Travel App\travel_web\public\userData\userData.json'
     dataset_path = r'C:\Users\melvi\Desktop\Travel App\travel_web\public\locationData\dataset.csv'
     test_data_path = r'C:\Users\melvi\Desktop\Travel App\travel_web\public\userData\test_data.json'
@@ -476,8 +526,8 @@ def main(user_id):
 
 
     top_k = 7
-    knn_weight = 0.5 
-    collab_weight = 0.485
+    knn_weight = 0.51 
+    collab_weight = 0.495
 
     recommendations = hybrid_model(user_id, user_data, dataset, knn_cosine, collaborative_filtering, 
                                    knn_weight=knn_weight, collab_weight=collab_weight, top_k=top_k)
@@ -515,14 +565,22 @@ def main(user_id):
     
     evaluate_model(user_id, user_data_path, dataset_path, test_data_path, top_k, weights=None)
 
+    print(llm_model(user_id, user_data_path))
+
     return "Model executed successfully. Recommendations updated."
 
 
+def run_model(userID):
 
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
+    if userID is None:
         print("Error: User ID not provided.")
     else:
-        user_id = sys.argv[1]
-        result = main(user_id)
+        result = knn_model(userID)
         print(result)
+        return result
+
+
+
+if __name__ == '__main__':  
+    app.run(debug=True, host='0.0.0.0', port=5000)
+
