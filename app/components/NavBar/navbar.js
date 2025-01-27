@@ -49,9 +49,9 @@ const Navbar = ({ }) => {
           <Link href="/">
             <button className={styles.navCom}>Home</button>
           </Link>
-          <Link href="/explore">
+          {/* <Link href="/explore">
             <button className={styles.navCom}>Explore</button>
-          </Link>
+          </Link> */}
 
           <button className={styles.navCom}>Itinerary</button>
           <Link href="/social">
