@@ -1,212 +1,590 @@
-/* General Styles */
-.Home{
-  margin-left: 5rem;
-  margin-right: 5rem;
-  overflow: hidden;
-}
- 
+.main{
 
-.authButtons {
+  background-color: rgb(248, 249, 250);
+}
+
+.container {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: rgb(248, 249, 250);
 }
 
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 5rem;
+}
 
-.hero {
-  position: relative;
-  width: 100%;
-  height: 32rem; 
+.navMenu1,.navMenu2,.navMenu3{
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 2rem;
- 
-}
-
-.backgroundImage {
-  z-index: -1;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 2rem;
-}
-
-.overlay {
-  text-align: center;
-  color: white;
-  text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.7); /* 0 2px 4px */
-}
-
-.textcon{
-  padding-top: 9rem;
-  padding-bottom: 7.25rem;
-}
-.heroTitle {
-  font-size: 1.25rem; /* 2rem */
-  margin-bottom: 1rem;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.subTitle {
-  font-size: 0.99rem;
-  padding-right: 48rem;
-  opacity: 80%;
-  
-}
-
-.mainTitle {
-  font-size: 5.5rem; /* 5rem */
-  font-weight: bold;
-  margin: 0.3125rem 0; /* 0.5rem 0 */
-  padding-right: 38rem;
 
 }
 
-.description1 {
-  font-size:0.99rem;
-  margin-bottom: 0.25rem; 
-  padding-right: 48rem;
-  opacity: 80%;
-  
+.navMenu3{
+  padding-right: 23rem;
 }
-.description2 {
-  font-size:0.99rem;
-  margin-bottom: 0.25rem; 
-  padding-right: 46.5rem;
-  opacity: 80%;
-}
-.description3 {
-  font-size:0.99rem;
-  margin-bottom: 0.25rem; 
-  padding-right: 57.75rem;
-  opacity: 80%;
-}
-
-.searchBar {
+.navMenu {
   display: flex;
-  justify-content: center;
-  background-color: white;
-  border-radius: 0.3125rem; 
-  height: 4.5rem;
-  box-shadow: 0 4px 6px rgba(0.1, 0.1, 0.6, 0.3);
-  gap: 0.5rem;
+  align-items: center;
+  gap: 2.5rem;
+
 }
 
-.searchInput {
-  padding: 0.625rem 1.25rem; 
-  font-size: 1rem;
-  width: 55rem; /* 300px */
-  height: 2.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.3125rem; /* 5px */
-  margin-top:1rem;
+.navMenu a {
+  text-decoration: none;
   color: black;
 }
 
-.searchButton {
-  padding: 0.45rem 1.25rem; /* 10px 20px */
-  font-size: 1rem;
-  color: white;
-  background-color: black;
+.navMenuNew .loginBtn{
+ margin-right: 1rem;
+}
+
+.loginBtn {
+  background-color: transparent;
+  padding: 6px 19px;
   border: none;
-  height: 2.5rem;
-  width:8rem;
-  margin-top:1rem;
-  border-radius: 0.3125rem; /* 5px */
-  cursor: pointer;
-  transition: background-color 0.3s;
+  border-radius: 5px;
+ 
 }
 
-.searchButton:hover {
-  background-color: #444;
+.signupBtn {
+  background-color: black;
+  color: white;
+  padding: 6px 19px;
+  margin-right: 5rem;
+  border: none;
+  border-radius: 5px;
 }
 
-.RecommendedLocations,
-.AllLocation {
-  padding: 2rem;
-  padding-top: 3rem;
+.loginBtn:hover{
+  background-color: black;
+  color: white;
+}
+
+.signupBtn:hover{
+  background-color: rgb(69, 67, 67);
+  color: white;
+}
+
+.heroSection {
+  text-align: left;
+  display: flex;
+ 
+}
+
+.adventure1 h1 {
+
+  color: #2c2b2b;
+  margin-left:8.5rem ;
+  font-size: 4rem; /* Adjust the size to match */
+  font-weight: 700; /* Bold font weight */
+  line-height: 1.2; /* Adjust for spacing between lines */
+
+}
+
+.heroSubtext1 {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  color: #555;
+  margin-left:8.5rem ;
+  margin-top: 9rem;
+  font-size: 1rem;
   
 }
 
-.title {
-  font-size: 1.25rem; /* 2rem */
+.heroSubtext {
+  margin-bottom: 1.2rem;
+  font-weight: 400;
+  color: #2f2e2e;
+  margin-left:8.5rem ;
+  font-size: 1rem;
+  line-height: 1.6;
+  
+}
+
+
+
+ .howItWorks {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.heroImage, .serviceCard img, .destinationCard img {
+  object-fit: cover;
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.serviceCard{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.heroInfo {
+  text-align: left;
+  flex: 1;
+  align-items: center;
+  justify-content: center; 
+  margin-left: 3rem;
+}
+
+
+.imageLayout {
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+  gap: 0.8rem; 
+  margin-right: 11rem;    
+  margin-bottom: 5rem;       
+}
+
+.leftColumn, .rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.large {
+  width: 15rem;
+  height: 18rem;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.small {
+  width: 15rem;
+  height: 10rem;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.startExploring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(17, 119, 203);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.65rem 1.7rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left:8.5rem ;
+  margin-bottom: 15rem;
+}
+   
+
+.startExploring:hover {
+  background-color: #1d4ed8; 
+}
+
+.arrow {
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.servicesSection {
+  padding: 4rem 0 8rem;
+  }
+  .servicesSection h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: left;
+  margin-bottom: 3rem;
+  margin-left: 11rem;
+  color: #2c2b2b;
+  }
+  .serviceGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-left: 11rem;
+  }
+  .serviceCard {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1); /* 2px spread radius */
+  padding: 2rem;
+  text-align: center;
+  height: 20rem;
+  width: 16rem;
+  position: relative;
+  align-items: center;
+ 
+  }
+  .serviceCard .icon {
   margin-bottom: 1rem;
+  }
+  
+  .serviceCard h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  }
+  .serviceCard p {
+  font-size: 1rem;
+  color: #555;
+  }
+
+
+  .moreLink {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 8rem;
+    top: 160%;
+    transform: translateY(-50%);
+  }
+  
+  .moreLink img {
+    width: 3rem;
+    height: 3rem;
+  }
+/*How it works*/
+.workSection {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-left: 11rem;
+  padding-top: 1.5rem;
+  gap:5rem;
 }
 
-/* Media Queries for responsive design */
-@media (max-width: 1200px) {
-  .navbar {
-      padding: 1rem 1.5rem; /* Reduced padding on smaller screens */
-  }
-  .navLinks {
-      gap: 1rem; /* Reduced gap between nav links */
-  }
-  .hero {
-      height: 28rem; /* Slightly reduced hero height for smaller screens */
-  }
-  .backgroundImage {
-      height: auto; /* Adjust background image height on smaller screens */
-  }
-  .mainTitle {
-      font-size: 2.5rem; /* Smaller main title */
-  }
-  .heroTitle {
-      font-size: 1.125rem; /* Slightly smaller hero title */
-  }
+.imageContainer {
+  flex: 1;
+  position: relative;
+  max-width: 500px;
+  height: 35.5rem;
+  width: 20rem;
+  margin-top: 1.5rem;
 }
 
-@media (max-width: 1024px) {
-  .hero {
-      height: 25rem; /* Adjust height for tablet-like screens */
-  }
-  .navTitle {
-      font-size: 1.25rem; /* Adjust title size */
-  }
-  .searchInput {
-      width: 100%; /* Full-width search input on smaller devices */
-  }
-  .searchButton {
-      width: 100%; /* Full-width search button */
-  }
-  .mainTitle {
-      font-size: 2rem; /* Reduce the size of the title on small screens */
-  }
-  .description {
-      font-size: 0.875rem; /* Slightly smaller description text */
-  }
-  .RecommendedLocations,
-  .AllLocation {
-      padding: 1.5rem; /* Reduce padding on smaller screens */
-  }
+.workImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+  border-radius: 1rem;
 }
 
-/* Small screens (Mobile Devices) */
-@media (max-width: 768px) {
-  .navbar {
-      padding: 1rem; /* Smaller navbar padding */
-  }
-  .navLinks {
-      flex-direction: column; /* Stack nav links vertically */
-      gap: 0.625rem; /* Reduce gap */
-  }
-  .hero {
-      height: 20rem; /* Further reduce hero height */
-  }
-  .mainTitle {
-      font-size: 1.75rem; /* Further reduce main title size */
-  }
-  .heroTitle {
-      font-size: 1rem; /* Smaller hero title */
-  }
-  .subTitle {
-      font-size: 0.875rem; /* Adjust subtitle size */
-  }
-  .searchInput {
-      width: 100%; /* Full-width search input */
-  }
-  .searchButton {
-      width: 100%; /* Full-width search button */
-  }
+.workContent {
+  position: absolute;
+  top: 90%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  padding-left: 2rem;
+  color: #fff;
+  
 }
+
+.workContent h1 {
+  font-size: 1rem;
+  text-align: left;
+  color: #fff;
+}
+
+.buttonSection {
+  flex: 1;
+  display: flex;
+  
+}
+
+.buttonSection h1{
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  color: #797777;
+  font-size: 1rem;
+}
+
+
+.stepCard {
+  background: rgb(248, 249, 250);
+  padding: 2rem;
+  text-align: left;
+  width: 100%;
+  max-width: 600px;
+}
+
+.stepCard h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+
+.buttonGroup {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+}
+.buttonContainer {
+display: flex;
+align-items: center;
+width: 85%;
+margin-bottom: 1.5rem;
+height: 4.6rem;
+justify-content: space-between;
+}
+
+.searchIcon {
+margin-right: 1rem;
+font-size: 1.3rem;
+}
+.buttonContent {
+flex: 1;
+text-align: left;
+}
+
+.buttonContent strong {
+font-size: 1.1rem;
+font-weight: bold;
+display: block;
+margin-bottom: 0.5rem;
+}
+
+.buttonContent p {
+font-size: 0.9rem;
+color: #555;
+}
+
+
+.button1 {
+justify-content: center;
+text-align: left;
+border-radius: 0.7rem;
+padding-top: 0.9rem;
+justify-items: center;
+width: 33rem;
+position: relative;
+margin-left: 1.5rem;;
+}
+
+
+.button1:hover {
+background: #fff;
+box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1);
+}
+.buttonPlay{
+  display: flex;
+  align-items: center;
+}
+
+.arrowImg{
+  height: 2rem;
+  width: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin-left: 1.5rem;
+ 
+}
+
+
+
+
+.button1:hover + .arrowImg,
+.buttonPlay:hover + .arrowImg {
+  opacity: 1;
+}
+
+
+/*Category*/
+
+.categoriesSection h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: left;
+  margin-bottom: 0.8rem;
+  color: #2c2b2b;
+  display: flex;
+}
+
+.categoriesSection {
+  margin-left: 10rem;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 5rem;
+  
+}
+
+.categoriesSection h2 {
+  text-align: left;
+  font-weight: 400;
+  color: #2f2e2e;
+  font-size: 1rem;
+  line-height: 1.6;
+  display: flex;
+  
+}
+
+.categoryGrid {
+  display: flex;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 3rem;
+  margin-top: 3rem;
+
+}
+
+
+.categoryCard img {
+  height: 15rem;
+  width: 12rem;
+  object-fit: cover;
+  border-radius: 6rem;
+  display: flex;
+}
+
+ .categoryCard1 h3 {
+  text-align: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  color: #2c2b2b;
+  display: flex;
+  margin-top: 1rem;
+ 
+}
+.arrowButtons {
+display: flex;
+ justify-content: end;
+ gap: 1.5rem;
+
+ 
+  }
+  .leftArrow{
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+ 
+  }
+
+  .rightArrow {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    margin-right:11rem ;
+  }
+  
+  .g {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    gap: 1rem; 
+  }
+  
+  /*Destination*/
+
+  .destinationsSection {
+    margin-left: 11.5rem;
+    text-align: left;
+    margin-top: 5rem;
+   
+
+  }
+
+  .destinationsSection h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: left;
+  margin-bottom: 0.8rem;
+  color: #2c2b2b;
+  display: flex;
+  }
+  
+  .destinationGrid {
+    display: flex;
+    gap:2.5rem;
+    margin-top: 40px;
+  }
+  
+  .destinationCard {
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: left;
+    
+  }
+  
+  .destinationCard img {
+    width: 16rem;
+    height: 16rem;
+    object-fit: cover;
+  }
+  
+  .destinationCard h3 {
+
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 0.8rem;
+  }
+  
+  .destinationCard p {
+    margin-top:0.2rem;
+    font-size: 14px;
+    color: #666;
+    margin-left: 0.8rem;
+  }
+  
+  .exploreButton {
+  display: flex;
+  background-color: rgb(17, 119, 203);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.65rem 1.7rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+   margin-left: 29rem;
+   margin-top: 3rem;
+   margin-bottom: 10rem;
+  }
+  
+  .exploreButton:hover {
+    background-color: #0056b3;
+  }
+ 
+  .destinationIcon .plusIcon,.destinationIcon .heartIcon{
+    display: flex;
+    height: 2rem;
+    width: 2rem;
+    margin-right: 0.7rem;
+  }
+
+  .destinationTi {
+    
+      display: flex;
+      justify-content: space-between; 
+      align-items: center;
+    }
+
+    .destinationIcon{
+      display: flex;
+       justify-content: end;
+       gap: 0.2rem;
+       align-items: center;
+       margin-top: 1rem;
+    }
