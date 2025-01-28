@@ -10,6 +10,7 @@ import FetchDataButton from "@/app/components/Locations/buttons/addButton";
 import { AuthProvider, useAuth } from '@/hooks/AuthContext';
 import SearchBar from "./components/searchbar";
 import Link from "next/link";
+import { app } from "@/lib/firebaseConfig";
 
 export default function Explore() {
   const limit = '';
@@ -42,6 +43,8 @@ export default function Explore() {
     color: 'black'
   };
 
+  const user1 = app.auth().currentUser;
+  console.log(user1)
   return (
     <AuthProvider>
       <div>

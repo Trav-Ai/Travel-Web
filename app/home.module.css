@@ -1,173 +1,83 @@
-.main{
-
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: rgb(248, 249, 250);
-}
-
-.container {
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
   font-family: Arial, sans-serif;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: rgb(248, 249, 250);
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  padding-left: 5rem;
-}
-
-.navMenu1,.navMenu2,.navMenu3{
-  display: flex;
-  align-items: center;
-
-}
-
-.navMenu3{
-  padding-right: 23rem;
-}
-.navMenu {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-
-}
-
-.navMenu a {
-  text-decoration: none;
-  color: black;
-}
-
-.navMenuNew .loginBtn{
- margin-right: 1rem;
-}
-
-.loginBtn {
-  background-color: transparent;
-  padding: 6px 19px;
-  border: none;
-  border-radius: 5px;
- 
-}
-
-.signupBtn {
-  background-color: black;
-  color: white;
-  padding: 6px 19px;
-  margin-right: 5rem;
-  border: none;
-  border-radius: 5px;
-}
-
-.loginBtn:hover{
-  background-color: black;
-  color: white;
-}
-
-.signupBtn:hover{
-  background-color: rgb(69, 67, 67);
-  color: white;
-}
-
 .heroSection {
-  text-align: left;
   display: flex;
- 
+  justify-content: center;
+  align-items: center;
+  gap: clamp(5px, 14.2vw, 220px);
+  text-align: left;
+  width: clamp(100px, 92vw, 1400px);
+  height: 100vh;
+  margin-top: -45px;
+  padding: 0 60px;
+}
+
+
+.heroInfo {
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3.5rem;
+  min-width: 250px;
 }
 
 .adventure1 h1 {
-
   color: #2c2b2b;
-  margin-left:8.5rem ;
-  font-size: 4rem; /* Adjust the size to match */
-  font-weight: 700; /* Bold font weight */
-  line-height: 1.2; /* Adjust for spacing between lines */
-
+  font-size: clamp(3rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .heroSubtext1 {
   font-family: Arial, sans-serif;
   font-weight: 400;
   color: #555;
-  margin-left:8.5rem ;
   margin-top: 9rem;
-  font-size: 1rem;
-  
+  font-size: clamp(0.9rem, 1.2vw, 1rem)
 }
 
 .heroSubtext {
+  margin-top: 5px;
   margin-bottom: 1.2rem;
   font-weight: 400;
   color: #2f2e2e;
-  margin-left:8.5rem ;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
   line-height: 1.6;
-  
+  max-width: 290px;
+
 }
-
-
-
- .howItWorks {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.heroImage, .serviceCard img, .destinationCard img {
-  object-fit: cover;
-  width: 100%;
-  border-radius: 20px;
-  margin-bottom: 15px;
-}
-
-.serviceCard{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.heroInfo {
-  text-align: left;
-  flex: 1;
-  align-items: center;
-  justify-content: center; 
-  margin-left: 3rem;
-}
-
 
 .imageLayout {
   display: flex;
-  justify-content: center; 
-  align-items: center;    
-  gap: 0.8rem; 
-  margin-right: 11rem;    
-  margin-bottom: 5rem;       
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
 }
 
-.leftColumn, .rightColumn {
+.leftColumn,
+.rightColumn {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 }
 
 .large {
-  width: 15rem;
-  height: 18rem;
+  width: clamp(10em, 15vw, 15rem);
+  height: clamp(10rem, 20vw, 17rem);
   border-radius: 1rem;
   object-fit: cover;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .small {
-  width: 15rem;
-  height: 10rem;
+  width: clamp(10rem, 15vw, 15rem);
+  height: clamp(10rem, 10vw, 10rem);
   border-radius: 1rem;
   object-fit: cover;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -179,135 +89,178 @@
   justify-content: center;
   background-color: rgb(17, 119, 203);
   color: #fff;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 600;
-  padding: 0.65rem 1.7rem;
+  padding: 0.55rem 1.85rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 9px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-left:8.5rem ;
   margin-bottom: 15rem;
 }
-   
+
 
 .startExploring:hover {
-  background-color: #1d4ed8; 
+  background-color: #1d4ed8;
 }
+
+
+
+
+
+
+.howItWorks {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.heroImage,
+.serviceCard img,
+.destinationCard img {
+  object-fit: cover;
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.serviceCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+
+
 
 .arrow {
   margin-left: 0.5rem;
   font-size: 1.2rem;
 }
 
+
+
 .servicesSection {
-  padding: 4rem 0 8rem;
-  }
-  .servicesSection h2 {
-  font-size: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px 50px;
+}
+
+.serviceHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.serviceArrowButtons{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.serviceArrowButtons img{
+  height: 40px;
+}
+
+.servicesSection h2 {
+  font-size: 2.1rem;
   font-weight: 700;
   text-align: left;
-  margin-bottom: 3rem;
-  margin-left: 11rem;
   color: #2c2b2b;
-  }
-  .serviceGrid {
+}
+
+.serviceGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
-  margin-left: 11rem;
-  }
-  .serviceCard {
+  gap: 2.2rem;
+}
+
+.serviceCard {
   background-color: #fff;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1); /* 2px spread radius */
+  box-shadow: 0 4px 6px 4px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   text-align: center;
-  height: 20rem;
-  width: 16rem;
-  position: relative;
+  height: 17rem;
+  width: 13rem;
   align-items: center;
- 
-  }
-  .serviceCard .icon {
-  margin-bottom: 1rem;
-  }
-  
-  .serviceCard h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  }
-  .serviceCard p {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.serviceCard .icon {
+  margin: 10px 0;
+
+}
+
+.serviceCard h3 {
   font-size: 1rem;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.serviceCard p {
+  font-size: 0.85rem;
   color: #555;
-  }
+  width: 9rem;
+  margin-bottom: 5px;
+}
 
 
-  .moreLink {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 8rem;
-    top: 160%;
-    transform: translateY(-50%);
-  }
-  
-  .moreLink img {
-    width: 3rem;
-    height: 3rem;
-  }
-/*How it works*/
+
+
+
+
 .workSection {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   margin-left: 11rem;
   padding-top: 1.5rem;
-  gap:5rem;
+  gap: 5rem;
 }
 
 .imageContainer {
-  flex: 1;
+
   position: relative;
-  max-width: 500px;
-  height: 35.5rem;
-  width: 20rem;
-  margin-top: 1.5rem;
+  width: 30vw;
 }
 
 .workImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.8);
   border-radius: 1rem;
 }
 
-.workContent {
+
+
+
+.imageContainer h1 {
+  font-size: 1rem;
+  text-align: left;
+  color: #fff;
   position: absolute;
   top: 90%;
   left: 35%;
   transform: translate(-50%, -50%);
   padding-left: 2rem;
   color: #fff;
-  
-}
-
-.workContent h1 {
-  font-size: 1rem;
-  text-align: left;
-  color: #fff;
 }
 
 .buttonSection {
   flex: 1;
   display: flex;
-  
+
 }
 
-.buttonSection h1{
+.buttonSection h1 {
   font-family: Arial, sans-serif;
   font-weight: 500;
   color: #797777;
@@ -331,77 +284,81 @@
 
 
 .buttonGroup {
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
+
 .buttonContainer {
-display: flex;
-align-items: center;
-width: 85%;
-margin-bottom: 1.5rem;
-height: 4.6rem;
-justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 85%;
+  margin-bottom: 1.5rem;
+  height: 4.6rem;
+  justify-content: space-between;
 }
 
 .searchIcon {
-margin-right: 1rem;
-font-size: 1.3rem;
+  margin-right: 1rem;
+  font-size: 1.3rem;
 }
+
 .buttonContent {
-flex: 1;
-text-align: left;
+  flex: 1;
+  text-align: left;
 }
 
 .buttonContent strong {
-font-size: 1.1rem;
-font-weight: bold;
-display: block;
-margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
 .buttonContent p {
-font-size: 0.9rem;
-color: #555;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 
 .button1 {
-justify-content: center;
-text-align: left;
-border-radius: 0.7rem;
-padding-top: 0.9rem;
-justify-items: center;
-width: 33rem;
-position: relative;
-margin-left: 1.5rem;;
+  justify-content: center;
+  text-align: left;
+  border-radius: 0.7rem;
+  padding-top: 0.9rem;
+  justify-items: center;
+  width: 33rem;
+  position: relative;
+  margin-left: 1.5rem;
+  ;
 }
 
 
 .button1:hover {
-background: #fff;
-box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1);
 }
-.buttonPlay{
+
+.buttonPlay {
   display: flex;
   align-items: center;
 }
 
-.arrowImg{
+.arrowImg {
   height: 2rem;
   width: 2rem;
   opacity: 0;
   transition: opacity 0.3s ease;
   margin-left: 1.5rem;
- 
+
 }
 
 
 
 
-.button1:hover + .arrowImg,
-.buttonPlay:hover + .arrowImg {
+.button1:hover+.arrowImg,
+.buttonPlay:hover+.arrowImg {
   opacity: 1;
 }
 
@@ -422,7 +379,7 @@ box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 40px 20px;
   margin-top: 5rem;
-  
+
 }
 
 .categoriesSection h2 {
@@ -432,7 +389,7 @@ box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
   line-height: 1.6;
   display: flex;
-  
+
 }
 
 .categoryGrid {
@@ -452,7 +409,7 @@ box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1);
   display: flex;
 }
 
- .categoryCard1 h3 {
+.categoryCard1 h3 {
   text-align: center;
   justify-content: center;
   font-size: 1rem;
@@ -461,91 +418,93 @@ box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1);
   color: #2c2b2b;
   display: flex;
   margin-top: 1rem;
- 
-}
-.arrowButtons {
-display: flex;
- justify-content: end;
- gap: 1.5rem;
 
- 
-  }
-  .leftArrow{
+}
+
+.arrowButtons {
+  display: flex;
+  justify-content: end;
+  gap: 1.5rem;
+
+
+}
+
+.leftArrow {
   width: 3rem;
   height: 3rem;
   cursor: pointer;
- 
-  }
 
-  .rightArrow {
-    width: 3rem;
-    height: 3rem;
-    cursor: pointer;
-    margin-right:11rem ;
-  }
-  
-  .g {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    gap: 1rem; 
-  }
-  
-  /*Destination*/
+}
 
-  .destinationsSection {
-    margin-left: 11.5rem;
-    text-align: left;
-    margin-top: 5rem;
-   
+.rightArrow {
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  margin-right: 11rem;
+}
 
-  }
+.g {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
 
-  .destinationsSection h2 {
+/*Destination*/
+
+.destinationsSection {
+  margin-left: 11.5rem;
+  text-align: left;
+  margin-top: 5rem;
+
+
+}
+
+.destinationsSection h2 {
   font-size: 2rem;
   font-weight: 700;
   text-align: left;
   margin-bottom: 0.8rem;
   color: #2c2b2b;
   display: flex;
-  }
-  
-  .destinationGrid {
-    display: flex;
-    gap:2.5rem;
-    margin-top: 40px;
-  }
-  
-  .destinationCard {
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    text-align: left;
-    
-  }
-  
-  .destinationCard img {
-    width: 16rem;
-    height: 16rem;
-    object-fit: cover;
-  }
-  
-  .destinationCard h3 {
+}
 
-    font-size: 18px;
-    font-weight: 600;
-    margin-left: 0.8rem;
-  }
-  
-  .destinationCard p {
-    margin-top:0.2rem;
-    font-size: 14px;
-    color: #666;
-    margin-left: 0.8rem;
-  }
-  
-  .exploreButton {
+.destinationGrid {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 40px;
+}
+
+.destinationCard {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: left;
+
+}
+
+.destinationCard img {
+  width: 16rem;
+  height: 16rem;
+  object-fit: cover;
+}
+
+.destinationCard h3 {
+
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 0.8rem;
+}
+
+.destinationCard p {
+  margin-top: 0.2rem;
+  font-size: 14px;
+  color: #666;
+  margin-left: 0.8rem;
+}
+
+.exploreButton {
   display: flex;
   background-color: rgb(17, 119, 203);
   color: #fff;
@@ -558,33 +517,34 @@ display: flex;
   cursor: pointer;
   transition: background-color 0.3s ease;
   display: inline-block;
-   margin-left: 29rem;
-   margin-top: 3rem;
-   margin-bottom: 10rem;
-  }
-  
-  .exploreButton:hover {
-    background-color: #0056b3;
-  }
- 
-  .destinationIcon .plusIcon,.destinationIcon .heartIcon{
-    display: flex;
-    height: 2rem;
-    width: 2rem;
-    margin-right: 0.7rem;
-  }
+  margin-left: 29rem;
+  margin-top: 3rem;
+  margin-bottom: 10rem;
+}
 
-  .destinationTi {
-    
-      display: flex;
-      justify-content: space-between; 
-      align-items: center;
-    }
+.exploreButton:hover {
+  background-color: #0056b3;
+}
 
-    .destinationIcon{
-      display: flex;
-       justify-content: end;
-       gap: 0.2rem;
-       align-items: center;
-       margin-top: 1rem;
-    }
+.destinationIcon .plusIcon,
+.destinationIcon .heartIcon {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  margin-right: 0.7rem;
+}
+
+.destinationTi {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.destinationIcon {
+  display: flex;
+  justify-content: end;
+  gap: 0.2rem;
+  align-items: center;
+  margin-top: 1rem;
+}

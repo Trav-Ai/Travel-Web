@@ -1,16 +1,17 @@
 "use client"
 import { useState } from 'react';
 import Image from 'next/image';
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  signInWithPopup, 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword
 } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { auth, app, googleProvider } from '@/lib/firebaseConfig';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import Cookies from 'js-cookie';
 
 const db = getFirestore(app);
 
@@ -59,12 +60,31 @@ const LoginPage = () => {
       let userCredential;
       if (isLogin) {
         // Login
-        userCredential = await signInWithEmailAndPassword(auth, email, password);
+        try {
+          userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          const idToken = await user.getIdToken();
+          Cookies.set('authToken', idToken, { expires: 7 });
+          console.log('Logged in and token set in cookie:', idToken);
+          // window.location.href = '/dashboard';
+        } catch (error) {
+          console.error('Login error:', error.message);
+        }
+
       } else {
         // Sign up
-        userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        try {
+          userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          const idToken = await user.getIdToken();
+          Cookies.set('authToken', idToken, { expires: 7 });
+          console.log('Logged in and token set in cookie:', idToken);
+          // window.location.href = '/dashboard';
+        } catch (error) {
+          console.error('Login error:', error.message);
+        }
       }
-      
+
       // Create/update user document
       await createUserDocument(userCredential.user);
       router.push('/');
@@ -79,9 +99,13 @@ const LoginPage = () => {
     setError('');
     setLoading(true);
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      // Create/update user document
-      await createUserDocument(result.user);
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      const user = userCredential.user;
+      const idToken = await user.getIdToken();
+      Cookies.set('authToken', idToken, { expires: 7 });
+      console.log('Logged in and token set in cookie:', idToken);
+      // window.location.href = '/dashboard';
+      await createUserDocument(user);
       router.push('/');
     } catch (err) {
       setError(err.message);
@@ -130,8 +154,8 @@ const LoginPage = () => {
             )}
             <form onSubmit={handleEmailAuth} className="space-y-4">
               <div>
-                <label 
-                  htmlFor="email" 
+                <label
+                  htmlFor="email"
                   className="block text-sm font-medium text-gray-600 mb-1"
                 >
                   Email
@@ -147,8 +171,8 @@ const LoginPage = () => {
                 />
               </div>
               <div>
-                <label 
-                  htmlFor="password" 
+                <label
+                  htmlFor="password"
                   className="block text-sm font-medium text-gray-600 mb-1"
                 >
                   Password
