@@ -74,3 +74,12 @@
   background-color: #555;
   color: white;
 }
+
+.refreshButton{
+  float: right;
+  background-color: rgb(44, 43, 49);
+  color: white;
+  font-size: 14px;
+  padding: 10px 30px;
+  border-radius: 10px;
+}

@@ -11,9 +11,7 @@ import { db } from "@/lib/firebaseConfig";
 import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { AuthProvider, useAuth } from '@/hooks/AuthContext';
 
-const AllLocation = ({ limit, currentLocation, filter, searchQuery }) => {
-  const { user, loading } = useAuth();
-  const [userID, setUserID] = useState(null);
+const AllLocation = ({ limit, currentLocation, filter, searchQuery, userID }) => {
   const [locations, setLocations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,14 +21,15 @@ const AllLocation = ({ limit, currentLocation, filter, searchQuery }) => {
     visitedLocations: [],
   });
 
+
   useEffect(() => {
-    if (user) {
-      setUserID(user.uid); // User ID from Firebase
+    if (userID) {
+      console.log(`UserID updated: ${userID}`);
+    } else {
+      console.log('User is logged out');
     }
-    else {
-      setUserID(null);
-    }
-  }, [user]);
+  }, [userID]);
+
 
   useEffect(() => {
     if (userID) {
@@ -100,24 +99,24 @@ const AllLocation = ({ limit, currentLocation, filter, searchQuery }) => {
               filteredLocations = filteredLocations.filter(
                 location => location.Category && location.Category.toLowerCase() === 'hill station'.toLowerCase());
             }
-            
+
 
             //Search Bar 
             if (searchQuery) {
               const sanitizedSearchQuery = searchQuery.trim().toLowerCase();
-            
+
               // First, filter locations where the name starts with the query
               let filteredByName = filteredLocations.filter(location =>
                 location.Name && location.Name.toLowerCase().startsWith(sanitizedSearchQuery)
               );
-            
+
               // If we have no results from name matching, search other fields
               if (filteredByName.length === 0) {
                 filteredLocations = filteredLocations.filter(location => {
                   const locationLocation = location.Location ? location.Location.toLowerCase() : "";
                   const locationCategory = location.Category ? location.Category.toLowerCase() : "";
                   const locationDescription = location.Description ? location.Description.toLowerCase() : "";
-            
+
                   // Check other fields for matches
                   return (
                     locationLocation.includes(sanitizedSearchQuery) ||
@@ -129,17 +128,17 @@ const AllLocation = ({ limit, currentLocation, filter, searchQuery }) => {
                 filteredLocations = filteredByName;
               }
             }
-            
-            
+
+
 
             // If filter is 'recommended' and userID is available, filter based on user's recommended locations
             if (filter === 'recommended' && userID) {
-              const recommendedLocations = userData.recommended || []; // Ensure it's always an array
-              if (recommendedLocations.length > 0) {
-                filteredLocations = filteredLocations.filter((location) =>
-                  recommendedLocations.includes(location.Name) // Match by location name
-                );
-              }
+              const recommendedLocations = userData.recommended || [];
+
+              filteredLocations = filteredLocations.filter((location) =>
+                recommendedLocations.includes(location.Name) // Match by location name
+              );
+
             }
 
             setLocations(filteredLocations); // Update locations state with the filtered results
@@ -153,6 +152,7 @@ const AllLocation = ({ limit, currentLocation, filter, searchQuery }) => {
         setIsLoading(false);
       });
   }, [filter, currentLocation, userData.recommended, userID, searchQuery]); // Run this effect when filter, userData.recommended, currentLocation, or userID change
+
 
   //Handle Button Actions
   const handleAction = (locationName, action) => {
@@ -208,7 +208,14 @@ const AllLocation = ({ limit, currentLocation, filter, searchQuery }) => {
   return (
     <AuthProvider>
       <div className={styles.locationGrid}>
-        {locations.length === 0 ? (
+        {/*No Locaiton to recommend*/}
+        {filter === 'recommended' && userID && locations.length === 0 &&
+          <div>
+            No Locations to recoommned
+          </div>
+        }
+        {/*When no locations are loaded*/}
+        {locations.length === 0 && filter !== 'recommended' ? (
           <p>Loading...</p>
         ) : (
 

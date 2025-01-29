@@ -11,12 +11,15 @@ import { AuthProvider, useAuth } from '@/hooks/AuthContext';
 import SearchBar from "./components/searchbar";
 import Link from "next/link";
 import { app } from "@/lib/firebaseConfig";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
+import { auth } from "@/lib/firebaseConfig";
 
 export default function Explore() {
   const limit = '';
   const [filter, setFilter] = useState('all');
-  const [user, setUser] = useState();
-  //const { user, loading } = useAuth();
+  const [user, setUser] = useState(null);
+  const [userID, setUserID] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentLocation, setcurrentLocation] = useState('Thiruvananthapuram');
@@ -43,8 +46,42 @@ export default function Explore() {
     color: 'black'
   };
 
-  const user1 = app.auth().currentUser;
-  console.log(user1)
+  useEffect(() => {
+    const checkAuthentication = () => {
+      const idToken = Cookies.get('authToken');
+
+      if (idToken) {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          if (user) {
+            setUser(user);
+            setUserID(user.uid);
+            console.log('User is authenticated:', user.uid);
+          } else {
+            setUser(null);
+            console.log('No user is authenticated.');
+          }
+        });
+
+        return () => unsubscribe();
+      } else {
+        setUser(null);
+        console.log('No user is authenticated.');
+      }
+    };
+
+    checkAuthentication();
+  }, []);
+
+  //Updating userID when Logging out
+  useEffect(() => {
+    const idToken = Cookies.get('authToken');
+
+    if (!idToken) {
+      setUser(null);
+      setUserID(null);
+    }
+  }, [user, userID]);
+
   return (
     <AuthProvider>
       <div>
@@ -53,7 +90,7 @@ export default function Explore() {
           <ExploreBanner />
           <div className={styles.TopDestinations}>
             <h1 className={styles.Title1}>TOP DESTINATIONS</h1>
-            <AllLocation limit='4' filter='top' />
+            <AllLocation limit='4' filter='top' userID={userID} />
           </div>
           <SearchBar onSearch={handleSearchChange} />
           {!searchQuery ? (<div>
@@ -66,6 +103,7 @@ export default function Explore() {
               <button className={filter === 'mountains' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('mountains')}>Mounatains</button>
             </div>
 
+
             {!user && filter === 'recommended' ? (
               <div className={styles.Error}>
                 <h1>Please Log in to access recommended Locations</h1>
@@ -75,12 +113,19 @@ export default function Explore() {
               </div>
             ) : (
               <div className={styles.AllDestinations}>
-                <AllLocation limit={limit} filter={filter} currentLocation={currentLocation} />
+                
+                {/*Refresh Button*/}
+                {user && filter === 'recommended' &&
+                  <button className={styles.refreshButton}>Refresh</button>
+                }
+
+                <AllLocation limit={limit} filter={filter} currentLocation={currentLocation} userID={userID} />
               </div>
             )}
           </div>)
+
             : <div className={styles.AllDestinations}>
-              <AllLocation searchQuery={searchQuery} />
+              <AllLocation searchQuery={searchQuery} userID={userID} />
             </div>
           }
         </main>

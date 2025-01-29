@@ -104,7 +104,6 @@ const LoginPage = () => {
       const idToken = await user.getIdToken();
       Cookies.set('authToken', idToken, { expires: 7 });
       console.log('Logged in and token set in cookie:', idToken);
-      // window.location.href = '/dashboard';
       await createUserDocument(user);
       router.push('/');
     } catch (err) {

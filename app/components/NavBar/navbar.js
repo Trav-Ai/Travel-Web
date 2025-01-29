@@ -6,6 +6,7 @@ import { logout } from '@/hooks/auth';
 import { AuthProvider, useAuth } from '@/hooks/AuthContext';
 import { useEffect } from 'react';
 
+
 const Navbar = ({ }) => {
 
   const { user, loading } = useAuth();
@@ -21,11 +22,11 @@ const Navbar = ({ }) => {
     setIsDropdownOpen((prevState) => !prevState);
   };
 
+
   const handleLogout = async () => {
     try {
- 
-      await logout(); // Call your logout function from the auth file
-      setIsLoggedIn(false);
+      await logout();  // Call the logout function (which should handle signing out)
+      setIsLoggedIn(false);  // Update the login state
     } catch (error) {
       console.error('Logout error:', error.message);
     }
@@ -49,9 +50,9 @@ const Navbar = ({ }) => {
           <Link href="/">
             <button className={styles.navCom}>Home</button>
           </Link>
-          {/* <Link href="/explore">
+          <Link href="/explore">
             <button className={styles.navCom}>Explore</button>
-          </Link> */}
+          </Link>
 
           <button className={styles.navCom}>Itinerary</button>
           <Link href="/social">
@@ -61,31 +62,31 @@ const Navbar = ({ }) => {
 
         {loading && <p>Loading...</p>}
         {!loading &&
-        <div className={styles.ctoButtons}>
-          {!isLoggedIn && (
-            <> 
-              <Link href='/signup'>
-                <button className={styles.navButtonSignup}>Sign Up</button>
-              </Link>
-              <Link href='/signup'>
-                <button className={styles.navButton}>Login</button>
-              </Link>
-            </>
-          )}
+          <div className={styles.ctoButtons}>
+            {!isLoggedIn && (
+              <>
+                <Link href='/signup'>
+                  <button className={styles.navButtonSignup}>Sign Up</button>
+                </Link>
+                <Link href='/signup'>
+                  <button className={styles.navButton}>Login</button>
+                </Link>
+              </>
+            )}
 
-          {isLoggedIn && (
-            <>
-              <button className={styles.userName} onClick={toggleDropdown}>{user.username}</button>
-              {isDropdownOpen && (
-              <div className="dropdown-menu">
-                <button onClick={handleLogout} className={styles.logout}>
-                  Logout
-                </button>
-              </div>
-              )}
-            </>
-          )}
-        </div>
+            {isLoggedIn && (
+              <>
+                <button className={styles.userName} onClick={toggleDropdown}>{user.username}</button>
+                {isDropdownOpen && (
+                  <div className="dropdown-menu">
+                    <button onClick={handleLogout} className={styles.logout}>
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         }
 
         <div className={styles.hamburger}>
