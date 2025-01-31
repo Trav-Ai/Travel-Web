@@ -1,19 +1,28 @@
 /* styles/explore.module.css */
 .TopDestinations {
-    width: 80vw;
-    margin: 50px auto;
-    height: 25vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  height: 25vw;
+  max-width: fit-content;
   }
   
 .Title1{
   font-weight: 800;
   margin-bottom: 20px;
+  margin-right: auto;
 }
 
 .AllDestinations{
-  width: 80vw;
+  width: 70vw;
   margin: 50px auto;
   height: 25vw;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+
 }
 
 .filters{
@@ -75,11 +84,17 @@
   color: white;
 }
 
+
+
 .refreshButton{
-  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: rgb(44, 43, 49);
   color: white;
   font-size: 14px;
-  padding: 10px 30px;
+  padding: 10px 40px;
   border-radius: 10px;
+  margin-bottom: 15px;
+  width: 120px;
 }

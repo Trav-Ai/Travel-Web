@@ -1,1 +1,3 @@
 from the input location or locations, find 10 similar locations based on the type of location and return the output with only their location names
+give the output as an list of 10 locations and nothing else
+format: Locations:[location1, location2, location3]

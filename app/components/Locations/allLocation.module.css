@@ -1,14 +1,16 @@
 .locationGrid {
 margin: auto;
+display: flex;
+justify-content: center;
 }
 
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap:25px; /* Automatically adjust the number of columns */
-  justify-items: stretch; /* Make sure items fill their grid cells */
-  justify-content: start; /* Align the entire grid to the left */
-  width: 100%; /* Ensure full width */
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 30px;
+  justify-items: stretch; 
+  justify-content: start; 
+
 }
 
 
@@ -16,16 +18,29 @@ margin: auto;
   text-align: left;
   display: flex; 
   flex-direction: column;
-  height:265px;
-  width: clamp(200px, 18.3vw, 310px); /* Set a fixed height for the card */
+  height:290px;
+  width: clamp(150px, 16vw, 310px); /* Set a fixed height for the card */
+  transition: transform 0.2s ease, filter 0.3s ease;
+}
+
+.locationCard:hover{
+  transform: scale(1.03) translateY(-5px);
+  cursor: pointer;
+}
+
+.locationCard:active{
+  transition: 0.1s ease-in-out;
+  transform: scale(0.98);
+  cursor: pointer;
 }
 
 .locationCard img {
   max-width: 100%;
   height: 15.7vw;
-  border-radius:1.5rem;
-  object-fit: cover;  
+  border-radius: 1.5rem;
+  object-fit: cover;
 }
+
 
 .Content{
   display: flex;

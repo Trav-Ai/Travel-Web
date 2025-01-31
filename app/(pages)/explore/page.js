@@ -14,6 +14,7 @@ import { app } from "@/lib/firebaseConfig";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { auth } from "@/lib/firebaseConfig";
+import ModelButton from "@/app/components/modelButton/modelButton";
 
 export default function Explore() {
   const limit = '';
@@ -34,7 +35,7 @@ export default function Explore() {
   };
 
   const activeStyle = {
-    backgroundColor: '#0074D9',
+    backgroundColor: '#0074D9', 
     color: 'white',
     fontWeight: '400'
   };
@@ -116,7 +117,7 @@ export default function Explore() {
                 
                 {/*Refresh Button*/}
                 {user && filter === 'recommended' &&
-                  <button className={styles.refreshButton}>Refresh</button>
+                  <ModelButton userId={userID} />
                 }
 
                 <AllLocation limit={limit} filter={filter} currentLocation={currentLocation} userID={userID} />

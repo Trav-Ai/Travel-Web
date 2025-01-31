@@ -11,43 +11,91 @@ import warnings
 import sys
 from collections import defaultdict
 from datetime import datetime
-
+from firebase import firebase
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 
 
 #<<<<<<<<<<< API Route >>>>>>>>>>>>>>
 
-app = Flask(__name__)
-CORS(app)  # Enable CORS for all domains (or restrict to specific domains)
+# app = Flask(__name__)
+# CORS(app)  # Enable CORS for all domains (or restrict to specific domains)
 
-@app.route('/execute-model', methods=['POST'])
-def execute_model():
-    try:
-        # Get the user_id from the POST request
-        user_id = request.json.get('user_id')
+# @app.route('/execute-model', methods=['POST'])
+# def execute_model():
+#     try:
+#         # Get the user_id from the POST request
+#         user_id = request.json.get('user_id')
         
-        if not user_id:
-            return jsonify({"message": "User ID is required!"}), 400
+#         if not user_id:
+#             return jsonify({"message": "User ID is required!"}), 400
         
-        # Call the model.py script with the user_id
-        # result = subprocess.run(
-        #     ['python', 'model/knn_CF.py', user_id], 
-        #     capture_output=True, text=True, check=True
-        # )
+#         # Call the model.py script with the user_id
+#         # result = subprocess.run(
+#         #     ['python', 'model/knn_CF.py', user_id], 
+#         #     capture_output=True, text=True, check=True
+#         # )
 
-        result = run_model(user_id)
+#         # result = run_model(user_id)
+#         result = get_user_data(user_id)
  
-        return jsonify({"message": "Executed Sucessfully"}), 200
+#         return jsonify({"message": "Executed Sucessfully"}), 200
 
-    except subprocess.CalledProcessError as e:
-        return jsonify({"message": "Failed to execute the model.", "error": str(e)}), 500
-
-
+#     except subprocess.CalledProcessError as e:
+#         return jsonify({"message": "Failed to execute the model.", "error": str(e)}), 500
 
 
 
 
-#<<<<<<<<<<< AI Model >>>>>>>>>>>>>>
+#<<<<<<<<<<< FireBase >>>>>>>>>>>>>>
+
+cred = credentials.Certificate('C:/Users/melvi/Desktop/Travel App/travel_web/lib/firebaseConfig.json')  # Replace with your JSON file path
+firebase_admin.initialize_app(cred)
+
+# Initialize Firestore
+db = firestore.client()
+
+# Function to retrieve user data by userID
+def get_user_data(user_id):
+    try:
+        # Path to the user document in Firestore
+        user_ref = db.collection('users').document(user_id)  # Replace 'users' with your collection name
+        
+        # Retrieve data from Firestore
+        user_data = user_ref.get()
+        
+        if user_data.exists:
+            # Get the user data as a dictionary
+            user_dict = user_data.to_dict()
+            
+            # Check if 'recommended' field exists
+            if 'recommended' not in user_dict:
+                user_ref.update({'recommended': []})
+                print(f"Created 'recommended' array for userID: {user_id}")
+            
+            return user_dict
+        else:
+            print(f"No data found for userID: {user_id}")
+            return None
+    except Exception as e:
+        print(f"Error retrieving user data: {e}")
+        return None
+
+def save_recommended(user_id, recommended_array):
+    try:
+        # Path to the user document in Firestore
+        user_ref = db.collection('users').document(user_id)  # Replace 'users' with your collection name
+        
+        # Update the 'recommended' array in Firestore
+        user_ref.update({'recommended': recommended_array})
+        
+        print(f"Saved 'recommended' array for userID: {user_id}")
+        return True
+    except Exception as e:
+        print(f"Error saving 'recommended' array for userID {user_id}: {e}")
+        return False
+
 
 def load_dataset(csv_path):
     try:
@@ -55,29 +103,34 @@ def load_dataset(csv_path):
     except Exception as e:
         print(f"Error loading dataset: {e}")
         return None
+    
 
-def load_user_data(json_path, user_id):
-    try:
-        with open(json_path, 'r') as f:
-            user_data = json.load(f)
+# def load_user_data(json_path, user_id):
+#     try:
+#         with open(json_path, 'r') as f:
+#             user_data = json.load(f)
 
-        if user_id in user_data and 'recommended' in user_data[user_id]:
-            user_data[user_id]['recommended'] = []  # Clear the list
+#         if user_id in user_data and 'recommended' in user_data[user_id]:
+#             user_data[user_id]['recommended'] = []  # Clear the list
 
-        return user_data
+#         return user_data
 
-    except Exception as e:
-        print(f"Error loading user data: {e}")
-        return None
+#     except Exception as e:
+#         print(f"Error loading user data: {e}")
+#         return None
 
 
-def save_user_data(user_data, json_path):
-    try:
-        with open(json_path, 'w') as f:
-            json.dump(user_data, f, indent=2)
-        print(f"Recommendations saved successfully to {json_path}")
-    except Exception as e:
-        print(f"Error saving user data: {e}")
+# def save_user_data(user_data, json_path):
+#     try:
+#         with open(json_path, 'w') as f:
+#             json.dump(user_data, f, indent=2)
+#         print(f"Recommendations saved successfully to {json_path}")
+#     except Exception as e:
+#         print(f"Error saving user data: {e}")
+
+
+
+
 
 
 
@@ -106,111 +159,12 @@ def seasons_overlap(season1, season2):
     
     return bool(set(season1_months) & set(season2_months))  
 
-# def knn_cosine(user_id, user_data, dataset, model, top_k=5):
-#     user_key = user_id
-#     user = user_data.get(user_key, {})
 
-#     liked_locations = user.get("likedLocations", [])
-#     visited_locations = user.get("visitedLocations", [])
-#     added_locations = user.get("addedLocations", [])
-#     currentLocation = user.get("currentLocation", None)
-#     nearbyLocations = dataset[dataset['Location'].str.lower() == currentLocation.lower()]['Name'].tolist()
 
-#     print("Nearby Locations:", nearbyLocations)
 
-#     current_season = "Autumn"
-#     print("Current Season", current_season)
-#     print("Current Location", currentLocation)
 
-#     # Weights are now declared inside the function
-#     weights = {
-#         'likedLocations': 1.0,
-#         'visitedLocations': 0.3,
-#         'addedLocations': 0.7,
-#         'nearbyLocations': 0.2,
+#<<<<<<<<<<< AI Model >>>>>>>>>>>>>>
 
-#         'description': 0.0,
-#         'category': 3.0, 
-#         'bestSeason': 0.0,
-#         'keywords': 0.0
-#     }
-
-#     locations_of_interest = []
-#     locations_of_interest.extend([(loc, 'likedLocations') for loc in liked_locations])
-#     locations_of_interest.extend([(loc, 'visitedLocations') for loc in visited_locations])
-#     locations_of_interest.extend([(loc, 'addedLocations') for loc in added_locations])
-#     locations_of_interest.extend([(loc, 'nearbyLocations') for loc in nearbyLocations])
-
-#     if not locations_of_interest:
-#         print("No liked, visited, or added locations available to generate recommendations.")
-#         return {}
-
-#     location_embeddings = {}
-#     model = SentenceTransformer('all-MiniLM-L12-v2')
-
-#     # Create embeddings for each location using columns such as Description, Category, BestSeason, and Keywords
-#     for _, row in dataset.iterrows():
-#         description = row['Description']
-#         category = row['Category']
-#         best_season = row['BestSeason']
-#         keywords = row['keywords']
-
-#         # Embed text columns like Description, Category, and Keywords
-#         description_embedding = model.encode(description)
-#         category_embedding = model.encode(category)
-#         keywords_embedding = model.encode(keywords)
-
-#         # Handle seasonality comparison with current season
-#         season_similarity = 1.0 if seasons_overlap(current_season, best_season.lower()) else 0.5
-
-#         location_embeddings[row['Name']] = {
-#             'description': description_embedding,
-#             'category': category_embedding,
-#             'bestSeason': season_similarity,  
-#             'keywords': keywords_embedding
-#         }
-
-#     combined_embedding = np.zeros(location_embeddings[next(iter(location_embeddings))]['description'].shape)
-
-#     # Combine embeddings for locations of interest with their respective weights
-#     for location, category in locations_of_interest:
-#         if location not in location_embeddings:
-#             continue
-#         weight = weights.get(category, 1.0)  # Apply weight for each category
-
-#         # For each location, combine embeddings of description, category, season, and keywords
-#         location_data = location_embeddings[location]
-
-#         combined_embedding += location_data['description'] * weight * weights.get('description', 1.0)
-#         combined_embedding += location_data['category'] * weight * weights.get('category', 1.0)  # Fix weight
-#         combined_embedding += location_data['keywords'] * weight * weights.get('keywords', 1.0)
-#         combined_embedding += location_data['bestSeason'] * weight * weights.get('bestSeason', 1.0)
-
-#     if len(locations_of_interest) > 0:
-#         combined_embedding /= len(locations_of_interest)
-
-#     similarities = []
-
-#     for name, location_data in location_embeddings.items():
-#         if name in liked_locations or name in visited_locations or name in added_locations:
-#             continue
-
-#         # Combine the embeddings for similarity calculation
-#         location_combined_embedding = np.zeros_like(combined_embedding)
-
-#         location_combined_embedding += location_data['description'] * weights.get('description', 1.0)
-#         location_combined_embedding += location_data['category'] * weights.get('category', 1.0)
-#         location_combined_embedding += location_data['keywords'] * weights.get('keywords', 1.0)
-#         location_combined_embedding += location_data['bestSeason'] * weights.get('bestSeason', 1.0)
-
-#         # Calculate cosine similarity
-#         similarity_score = cosine_similarity([combined_embedding], [location_combined_embedding])[0][0]
-#         similarities.append((name, similarity_score))
-
-#     similarities.sort(key=lambda x: x[1], reverse=True)
-#     top_similar_locations = similarities[:top_k]
-
-#     return top_similar_locations
 
 def llm_model(user_id, user_data_path):
     try:
@@ -261,12 +215,10 @@ def calculate_location_distance(currentLocation, location):
 
 def knn_cosine(user_id, user_data, dataset, model, top_k=5):
     user_key = user_id
-    user = user_data.get(user_key, {})
-
-    liked_locations = user.get("likedLocations", [])
-    visited_locations = user.get("visitedLocations", [])
-    added_locations = user.get("addedLocations", [])
-    currentLocation = user.get("currentLocation", None)
+    liked_locations = user_data.get("likedLocations", [])
+    visited_locations = user_data.get("visitedLocations", [])
+    added_locations = user_data.get("addedLocations", [])
+    currentLocation = user_data.get("currentLocation", None)
 
     current_season = "Autumn"
     print("Current Location:", currentLocation)
@@ -518,7 +470,7 @@ def knn_model(user_id):
 
 
     dataset = load_dataset(dataset_path)
-    user_data = load_user_data(user_data_path, user_id)
+    user_data = get_user_data(user_id)
 
     if dataset is None or dataset.empty or user_data is None:
         print("Error: Dataset or user data is missing or empty.")
@@ -537,22 +489,15 @@ def knn_model(user_id):
         return "No recommendations generated."
 
 
-    if user_id not in user_data:
-        print(f"Error: User ID {user_id} not found in user data.")
-        return f"Error: User ID {user_id} not found in user data."
-
-    user_key = user_id
-    if 'recommended' not in user_data[user_key]:
-        user_data[user_key]["recommended"] = []
-
-    recommended_set = set(user_data[user_key]["recommended"])
-
+    recommended_set = set(user_data.get("recommended", []))
+    final_sets = []
 
     for sim_location, _ in recommendations:
         if sim_location not in recommended_set:
-            user_data[user_key]["recommended"].append(sim_location)
+            final_sets.append(sim_location)
 
-    save_user_data(user_data, user_data_path)
+    print(final_sets)
+    save_recommended(user_id, final_sets)
 
     print("\nTop 5 recommendations:")
     current_location = user_data[user_key].get("currentLocation", "")
@@ -562,10 +507,10 @@ def knn_model(user_id):
         print(f"  - {sim_location} (Similarity: {sim_score:.4f}) {label}")
 
 
-    
-    evaluate_model(user_id, user_data_path, dataset_path, test_data_path, top_k, weights=None)
+     
+    #evaluate_model(user_id, user_data_path, dataset_path, test_data_path, top_k, weights=None)
 
-    print(llm_model(user_id, user_data_path))
+    #print(llm_model(user_id, user_data_path))
 
     return "Model executed successfully. Recommendations updated."
 
@@ -580,7 +525,8 @@ def run_model(userID):
         return result
 
 
+run_model('hXgGdyMgCcaTDz8jDzonnylnEWA2')
 
-if __name__ == '__main__':  
-    app.run(debug=True, host='0.0.0.0', port=5000)
+# if __name__ == '__main__':  
+#     app.run(debug=True, host='0.0.0.0', port=5000)
 

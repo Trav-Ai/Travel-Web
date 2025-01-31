@@ -1,0 +1,67 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    margin-bottom: 15px;
+    user-select: none;
+}
+
+.buttonComponenet {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.buttonLoader{
+    height: 40px;
+    transform: scale(0.45);
+
+}
+
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    background-color: rgb(44, 43, 49);
+    color: white;
+    font-size: 14px;
+    padding: 10px 25px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  .icon{
+    filter:invert();
+    height: 15px;
+    width: 15px;
+  }
+
+  .tooltip {
+    visibility: hidden;
+    position: absolute;
+    transform: translateY(-40px); /* Center the tooltip */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10; /* Make sure it appears above other content */
+  }
+  
+  /* Show tooltip when button is hovered */
+  .icon:hover + .tooltip {
+    visibility: visible;
+  }
+
+  .container p{
+    text-align: right;
+    font-size: 14px;
+    margin-top: 5px;
+    color: green;
+  }
+

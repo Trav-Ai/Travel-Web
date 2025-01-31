@@ -11,7 +11,16 @@ const ModelButton = ({ userId, onSuccess }) => { // onSuccess is passed as a pro
 
     try {
       // Send POST request to Flask API with user_id
-      const response = await fetch('http://127.0.0.1:5000/execute-model', {
+      // const response = await fetch('http://127.0.0.1:5000/execute-model', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ user_id: userId }) // Send user_id from props
+      // });
+
+
+      const response = await fetch('https://ai-recommendation-model.vercel.app/execute-model', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

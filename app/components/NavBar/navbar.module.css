@@ -13,15 +13,28 @@
 .navTitle {
   font-size: 1.3rem;
   font-weight: bold;
-  color: black;
+  color: var(--foreground);
   text-wrap: nowrap;
 }
+
 
 .navLinks {
   display: flex;
   gap: clamp(1px, 3.3vw, 45px);
   font-size: 15px;
 }
+
+.navCom:hover{
+  transition: 0.2s ease;
+  transform: translate(0, -3px) scale(1.05);
+
+}
+
+.navCom:active{
+  transition: 0.2s ease;
+  transform: scale(0.95);
+}
+
 
 .ctoButtons {
   display: flex;
@@ -36,8 +49,14 @@
   text-decoration: none;
   padding: 8px 30px;
   border-radius: 8px;
-  background-color: black;
+  background-color: var(--foreground);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.navButton:hover {
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .navButtonSignup {
@@ -45,9 +64,14 @@
   text-decoration: none;
 }
 
-.navButton:hover {
-  background-color: #555;
-  color: white;
+.navButtonSignup:hover {
+  transition: 0.2s ease;
+  transform: scale(1.05) translateY(-3px);
+}
+
+.navButtonSignup:active {
+  transition: 0.2s ease;
+  transform: scale(0.95);
 }
 
 /* Hamburger Icon */
@@ -61,7 +85,7 @@
 .hamburger .line {
   width: 25px;
   height: 3px;
-  background-color: black;
+  background-color: var(--foreground);
   transition: all 0.3s ease;
 }
 

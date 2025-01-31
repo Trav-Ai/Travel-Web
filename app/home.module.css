@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(248, 249, 250);
+  background-color:var(--background);
   font-family: Arial, sans-serif;
 }
 
@@ -18,17 +18,15 @@
   padding: 0 60px;
 }
 
-
 .heroInfo {
   text-align: left;
   align-items: center;
   justify-content: center;
-  margin-top: 3.5rem;
   min-width: 250px;
 }
 
 .adventure1 h1 {
-  color: #2c2b2b;
+  color: var(--foreground);
   font-size: clamp(3rem, 5vw, 4rem);
   font-weight: 700;
   line-height: 1.2;
@@ -38,7 +36,6 @@
   font-family: Arial, sans-serif;
   font-weight: 400;
   color: #555;
-  margin-top: 9rem;
   font-size: clamp(0.9rem, 1.2vw, 1rem)
 }
 
@@ -101,15 +98,6 @@
 }
 
 
-.startExploring:hover {
-  background-color: #1d4ed8;
-}
-
-
-
-
-
-
 .howItWorks {
   text-align: center;
   padding: 40px 20px;
@@ -142,20 +130,21 @@
 
 
 .servicesSection {
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 50px 50px;
 }
 
-.serviceHeader{
+.serviceHeader {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 3rem;
 }
 
-.serviceArrowButtons{
+.ArrowButtons {
   display: flex;
   gap: 10px;
   justify-content: center;
@@ -163,7 +152,7 @@
   margin: 0;
 }
 
-.serviceArrowButtons img{
+.ArrowButtons img {
   height: 40px;
 }
 
@@ -171,7 +160,7 @@
   font-size: 2.1rem;
   font-weight: 700;
   text-align: left;
-  color: #2c2b2b;
+  color: var(--foreground)
 }
 
 .serviceGrid {
@@ -181,17 +170,23 @@
 }
 
 .serviceCard {
-  background-color: #fff;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
   padding: 2rem;
   text-align: center;
   height: 17rem;
-  width: 13rem;
+  width: 14rem;
   align-items: center;
   display: flex;
   flex-direction: column;
+  
 
+}
+
+.serviceCard:hover{
+  transition: 0.2s ease;
+  transform: translateY(-4px);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
 }
 
 .serviceCard .icon {
@@ -216,157 +211,148 @@
 
 
 
+/* Work Section */
 
 .workSection {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin-left: 11rem;
-  padding-top: 1.5rem;
-  gap: 5rem;
+  margin-top: 100px;
+  gap: clamp(10px, 7.1vw, 80px);
+
 }
 
 .imageContainer {
-
   position: relative;
-  width: 30vw;
+  width: clamp(350px, 29vw 530px);
+  height: 530px;
+  overflow: hidden;
+  border-radius: 1rem;
 }
 
 .workImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 1rem;
+
 }
 
-
-
+.workImage:hover {
+  transition: 0.7s ease-in-out;
+  transform: scale(1.5);
+}
 
 .imageContainer h1 {
+  width: 300px;
   font-size: 1rem;
+  font-weight: 400;
   text-align: left;
   color: #fff;
   position: absolute;
   top: 90%;
   left: 35%;
   transform: translate(-50%, -50%);
-  padding-left: 2rem;
+  padding-left: 50px;
   color: #fff;
 }
 
-.buttonSection {
-  flex: 1;
-  display: flex;
-
-}
-
-.buttonSection h1 {
-  font-family: Arial, sans-serif;
-  font-weight: 500;
-  color: #797777;
-  font-size: 1rem;
-}
-
-
 .stepCard {
-  background: rgb(248, 249, 250);
-  padding: 2rem;
+  font-family: poppins;
+  letter-spacing: -0.2px;
   text-align: left;
-  width: 100%;
-  max-width: 600px;
+}
+
+.stepCard h1 {
+  font-weight: 400;
+  color: #797777;
+  font-size: 1.1rem;
 }
 
 .stepCard h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+  font-size: 2.6rem;
+  margin-bottom: 1.2rem;
+  font-weight: 500;
+  color: var(--foreground)
+}
+
+.workCard {
+  display: flex;
+  max-width: 28rem;
+  padding: 20px 20px;
+  border-radius: 0.7rem;
+  gap: 15px;
+  align-items: center;
+  user-select: none;
+}
+
+.workCard:hover {
+  transition: 0.1s ease;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+  cursor: pointer;
+}
+
+.workNumber {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 0 10px;
+  background-color: var(--foreground);
+}
+
+.workNumber h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 15px;
+  width: 15px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 15px;
+
+}
+
+.workIcon {
+  font-size: 1.3rem;
+  margin: 0 5px;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardContent strong {
+  font-size: 1.0rem;
   font-weight: 500;
 }
 
-
-.buttonGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.buttonContainer {
-  display: flex;
-  align-items: center;
-  width: 85%;
-  margin-bottom: 1.5rem;
-  height: 4.6rem;
-  justify-content: space-between;
-}
-
-.searchIcon {
-  margin-right: 1rem;
-  font-size: 1.3rem;
-}
-
-.buttonContent {
-  flex: 1;
-  text-align: left;
-}
-
-.buttonContent strong {
-  font-size: 1.1rem;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.buttonContent p {
-  font-size: 0.9rem;
+.cardContent p {
+  font-size: 0.80rem;
   color: #555;
 }
 
-
-.button1 {
-  justify-content: center;
-  text-align: left;
-  border-radius: 0.7rem;
-  padding-top: 0.9rem;
-  justify-items: center;
-  width: 33rem;
-  position: relative;
-  margin-left: 1.5rem;
-  ;
-}
-
-
-.button1:hover {
-  background: #fff;
-  box-shadow: 0 4px 6px 2px rgba(0, 0, 0, 0.1);
-}
-
-.buttonPlay {
-  display: flex;
-  align-items: center;
-}
-
 .arrowImg {
-  height: 2rem;
-  width: 2rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  margin-left: 1.5rem;
-
+  height: 30px;
+  margin-right: 10px;
 }
 
 
-
-
-.button1:hover+.arrowImg,
-.buttonPlay:hover+.arrowImg {
-  opacity: 1;
-}
 
 
 /*Category*/
 
+.categoriesSection {
+  margin-top: 5rem;
+  margin-bottom: 50px;
+}
+
+
 .categoriesSection h1 {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   font-weight: 700;
   text-align: left;
   margin-bottom: 0.8rem;
@@ -374,13 +360,6 @@
   display: flex;
 }
 
-.categoriesSection {
-  margin-left: 10rem;
-  text-align: center;
-  padding: 40px 20px;
-  margin-top: 5rem;
-
-}
 
 .categoriesSection h2 {
   text-align: left;
@@ -392,81 +371,76 @@
 
 }
 
-.categoryGrid {
-  display: flex;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 3rem;
-  margin-top: 3rem;
-
-}
-
-
-.categoryCard img {
-  height: 15rem;
-  width: 12rem;
-  object-fit: cover;
-  border-radius: 6rem;
-  display: flex;
-}
-
-.categoryCard1 h3 {
-  text-align: center;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.8rem;
-  color: #2c2b2b;
-  display: flex;
-  margin-top: 1rem;
-
-}
-
-.arrowButtons {
-  display: flex;
-  justify-content: end;
-  gap: 1.5rem;
-
-
-}
-
-.leftArrow {
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-
-}
-
-.rightArrow {
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  margin-right: 11rem;
-}
-
 .g {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
 }
+
+
+.categoryGrid {
+  display: flex;
+  margin-top: 3rem;
+  display: flex;
+  gap: 32px;
+}
+
+
+.categoryCard img {
+  height: 13rem;
+  width: 11rem;
+  object-fit: cover;
+  border-radius: 1.2rem;
+  display: flex;
+}
+
+.categoryCard {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  color: #2c2b2b;
+  gap: 15px;
+}
+
+
+.categoryCard:hover {
+  transition: 0.15s ease;
+  transform: scale(1.03) translateY(-5px);
+  cursor: pointer;
+}
+
+
+
+
 
 /*Destination*/
 
 .destinationsSection {
-  margin-left: 11.5rem;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: left;
-  margin-top: 5rem;
-
-
 }
 
 .destinationsSection h2 {
   font-size: 2rem;
   font-weight: 700;
   text-align: left;
+  margin-right: auto;
   margin-bottom: 0.8rem;
   color: #2c2b2b;
   display: flex;
+}
+
+.destinationHeader{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .destinationGrid {
@@ -475,76 +449,24 @@
   margin-top: 40px;
 }
 
-.destinationCard {
-  border-radius: 8px;
+.roundedButton {
   display: flex;
-  flex-direction: column;
-  align-content: center;
-  text-align: left;
-
-}
-
-.destinationCard img {
-  width: 16rem;
-  height: 16rem;
-  object-fit: cover;
-}
-
-.destinationCard h3 {
-
-  font-size: 18px;
-  font-weight: 600;
-  margin-left: 0.8rem;
-}
-
-.destinationCard p {
-  margin-top: 0.2rem;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--foreground);
   font-size: 14px;
-  color: #666;
-  margin-left: 0.8rem;
+  color: white;
+  height: 50px;
+  padding: 0 30px;
+  border-radius: 10px;
+  transition: background-color 0.1s ease;
 }
 
-.exploreButton {
-  display: flex;
-  background-color: rgb(17, 119, 203);
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 0.65rem 1.7rem;
-  border: none;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: inline-block;
-  margin-left: 29rem;
-  margin-top: 3rem;
-  margin-bottom: 10rem;
+.roundedButton:hover {
+  background-color: var(--primary-color);
 }
 
-.exploreButton:hover {
-  background-color: #0056b3;
-}
-
-.destinationIcon .plusIcon,
-.destinationIcon .heartIcon {
-  display: flex;
-  height: 2rem;
-  width: 2rem;
-  margin-right: 0.7rem;
-}
-
-.destinationTi {
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.destinationIcon {
-  display: flex;
-  justify-content: end;
-  gap: 0.2rem;
-  align-items: center;
-  margin-top: 1rem;
+.roundedButton:active {
+  transition: 0.2s ease;
+  transform: scale(0.95);
 }
