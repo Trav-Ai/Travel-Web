@@ -12,6 +12,7 @@ import {
   X,
   Bookmark,
   Camera,
+  Users,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebaseConfig";
@@ -42,157 +43,21 @@ import { usePosts } from "@/hooks/usePosts";
 import PostGridItem from "@/app/components/PostGridItem";
 import PostFeed from "@/app/components/PostFeed";
 import FriendSuggestions from "@/app/components/FriendSuggestions";
-
 import { Textarea } from "@/components/ui/textarea";
+import { CreatePostModal } from "@/app/components/CreatePostModal";
+import { EditProfileModal } from "@/app/components/EditProfileModal";
+import { CommunityTripPage } from "@/app/components/Community";
+
+
 
 const IMGBB_API_KEY = "ebff71d58cb2bef2855217f989765dce";
 
-// Utility Components
 const StatItem = ({ label, value }) => (
   <div className="text-center">
     <p className="font-bold text-lg">{value}</p>
     <p className="text-gray-600 text-sm">{label}</p>
   </div>
 );
-
-const EditProfileModal = ({ open, onOpenChange, profile, user }) => {
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    displayName: profile?.username || "",
-    bio: profile?.bio || "",
-    image: null,
-    imagePreview: profile?.photoURL || "",
-  });
-  const { toast } = useToast();
-
-  const handleImageChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFormData((prev) => ({
-        ...prev,
-        image: file,
-        imagePreview: URL.createObjectURL(file),
-      }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      let photoURL = profile?.photoURL;
-
-      if (formData.image) {
-        const formData = new FormData();
-        formData.append("image", formData.image);
-        formData.append("key", IMGBB_API_KEY);
-
-        const response = await fetch("https://api.imgbb.com/1/upload", {
-          method: "POST",
-          body: formData,
-        });
-        const data = await response.json();
-        photoURL = data.data.url;
-      }
-
-      // Update Firestore profile
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, {
-        username: formData.displayName,
-        bio: formData.bio,
-        photoURL,
-      });
-
-      // Update Firebase Auth profile
-      await updateProfile(user, {
-        displayName: formData.displayName,
-        photoURL,
-      });
-
-      toast({
-        title: "Profile updated successfully",
-        duration: 2000,
-      });
-      onOpenChange(false);
-    } catch (error) {
-      toast({
-        title: "Error updating profile",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Edit Profile</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="flex flex-col items-center gap-4">
-            <div className="relative">
-              <Avatar className="w-24 h-24">
-                <AvatarImage src={formData.imagePreview} />
-                <AvatarFallback>
-                  {formData.displayName[0]?.toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="absolute bottom-0 right-0 bg-gray-100 p-2 rounded-full cursor-pointer hover:bg-gray-200">
-                <Camera className="h-4 w-4" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <div htmlFor="displayName">Display Name</div>
-              <Input
-                id="displayName"
-                value={formData.displayName}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    displayName: e.target.value,
-                  }))
-                }
-              />
-            </div>
-            <div>
-              <div htmlFor="bio">Bio</div>
-              <Textarea
-                id="bio"
-                value={formData.bio}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, bio: e.target.value }))
-                }
-                className="h-24"
-              />
-            </div>
-          </div>
-
-          <DialogFooter>
-            <Button type="submit" disabled={loading}>
-              {loading ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              ) : null}
-              Save Changes
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-};
 
 const MainLayout = ({ children }) => {
   const [modals, setModals] = useState({
@@ -201,6 +66,7 @@ const MainLayout = ({ children }) => {
     settings: false,
     editProfile: false,
   });
+
   const [activeTab, setActiveTab] = useState("home");
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
@@ -257,14 +123,13 @@ const MainLayout = ({ children }) => {
           </div>
         );
       case "profile":
-        return (
-          <div className="space-y-6">
-            {children}
-           
-          </div>
-        );
+        return <div className="space-y-6">{children}</div>;
       case "messages":
         return <div>{children}</div>;
+
+      case "trips":
+        return <CommunityTripPage/>;
+
       default:
         return <div>{children}</div>;
     }
@@ -287,24 +152,26 @@ const MainLayout = ({ children }) => {
               onClick={() => setActiveTab("home")}
               active={activeTab === "home"}
             />
-            {/* <NavItem
-              icon={<MessageCircle className="h-5 w-5" />}
-              label="Messages"
-              badge={3}
-              onClick={() => setActiveTab("messages")}
-              active={activeTab === "messages"}
-            /> */}
             <NavItem
               icon={<User className="h-5 w-5" />}
               label="Profile"
               onClick={() => setActiveTab("profile")}
               active={activeTab === "profile"}
             />
+
+            <NavItem
+              icon={<Users className="h-5 w-5" />}
+              label="Trips"
+              onClick={() => setActiveTab("trips")}
+              active={activeTab === "trips"}
+            />
+
             <NavItem
               icon={<Search className="h-5 w-5" />}
               label="Search"
               onClick={() => toggleModal("search")}
             />
+
             <NavItem
               icon={<Settings className="h-5 w-5" />}
               label="Settings"
@@ -487,130 +354,6 @@ const SearchModal = ({ open, onOpenChange }) => {
   );
 };
 
-// Added missing CreatePostModal component
-const CreatePostModal = ({ open, onOpenChange }) => {
-  const [caption, setCaption] = useState("");
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
-
-  const handleImageChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => setPreview(reader.result);
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!caption && !image) return;
-
-    setLoading(true);
-    try {
-      let imageUrl = "";
-      if (image) {
-        const formData = new FormData();
-        formData.append("image", image);
-        formData.append("key", IMGBB_API_KEY);
-
-        const response = await fetch("https://api.imgbb.com/1/upload", {
-          method: "POST",
-          body: formData,
-        });
-        const data = await response.json();
-        imageUrl = data.data.url;
-      }
-
-      await addDoc(collection(db, "posts"), {
-        userId: user.uid,
-        username: user.displayName,
-        caption,
-        imageUrl,
-        createdAt: serverTimestamp(),
-        likes: [],
-        comments: [],
-      });
-
-      toast({
-        title: "Post created successfully",
-      });
-      onOpenChange(false);
-    } catch (error) {
-      toast({
-        title: "Error creating post",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create Post</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Input
-              placeholder="Write a caption..."
-              value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-            />
-          </div>
-
-          {preview ? (
-            <div className="relative">
-              <img
-                src={preview}
-                alt="Preview"
-                className="rounded-lg max-h-[300px] w-full object-cover"
-              />
-              <Button
-                type="button"
-                size="sm"
-                variant="ghost"
-                className="absolute top-2 right-2"
-                onClick={() => {
-                  setImage(null);
-                  setPreview("");
-                }}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          ) : (
-            <div className="flex items-center justify-center h-48 bg-gray-50 rounded-lg border-2 border-dashed">
-              <label className="cursor-pointer flex flex-col items-center">
-                <ImageIcon className="h-8 w-8 text-gray-400" />
-                <span className="mt-2 text-sm text-gray-500">Add a photo</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </label>
-            </div>
-          )}
-
-          <DialogFooter>
-            <Button type="submit" disabled={loading || (!caption && !image)}>
-              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Post"}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-};
-
 const ProfilePage = () => {
   const { user } = useAuth();
   const { profile, loading: profileLoading } = useProfile(user?.uid);
@@ -629,7 +372,6 @@ const ProfilePage = () => {
     }));
   };
 
-
   if (profileLoading || postsLoading) {
     return <ProfileSkeleton />;
   }
@@ -640,16 +382,18 @@ const ProfilePage = () => {
         {/* Profile Header */}
         <div className="bg-white rounded-xl p-6 shadow-sm">
           <div className="flex items-center gap-8">
-             <Avatar className="w-32 h-32">
-              <AvatarImage src={user?.photoURL||""}  />
+            <Avatar className="w-32 h-32">
+              <AvatarImage src={user?.photoURL || ""} />
               <AvatarFallback>
                 {profile?.username?.[0]?.toUpperCase()}
               </AvatarFallback>
-            </Avatar> 
+            </Avatar>
 
             <div className="flex-1">
               <div className="flex items-center gap-4 mb-4">
-                <h1 className="text-2xl font-bold">{user.displayName|| profile?.username}</h1>
+                <h1 className="text-2xl font-bold">
+                  {user.displayName || profile?.username}
+                </h1>
                 <Button
                   variant="outline"
                   onClick={() => toggleModal("editProfile")}
