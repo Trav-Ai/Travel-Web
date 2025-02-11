@@ -42,7 +42,7 @@ const ModelButton = ({ userId, onSuccess }) => { // onSuccess is passed as a pro
 
 
       // Send POST request to Flask API with user_id
-      const response = await fetch('http://127.0.0.1:5000/execute-model', {
+      const response = await fetch('http://13.126.69.100:5000/execute-model', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

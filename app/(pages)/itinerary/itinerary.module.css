@@ -1,0 +1,343 @@
+/* Scoped Styles for Itinerary Page */
+
+.body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Header for the page */
+.header {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Styling for the form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 20px;
+}
+
+/* Form Group (container for label and input) */
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label Styling */
+.label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Input Field Styling */
+.input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input:focus {
+    border-color: #007BFF;
+}
+
+/* Submit Button Styling */
+.submitButton {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.submitButton:hover:enabled {
+    background-color: #0056b3;
+}
+
+/* Result Section (shown after form submission) */
+.resultSection {
+    margin: 20px 200px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header for the Result Section */
+.resultHeader {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.planData {
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.planHeader {
+    font-size: 1.8rem; /* Larger font size for the heading */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px; /* Space below the heading */
+}
+.planData {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.planHeader {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* General styles for markdown rendering */
+.markdownContent {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+}
+
+/* Heading Styles */
+.markdownContent h1,
+.markdownContent h2,
+.markdownContent h3,
+.markdownContent h4,
+.markdownContent h5,
+.markdownContent h6 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+/* Paragraph Styles */
+.markdownContent p {
+    margin: 10px 0;
+}
+
+/* Unordered List Styles (for bullet points) */
+.markdownContent ul {
+    list-style-type: disc; /* Ensures bullet points */
+    margin-left: 20px; /* Adds indentation */
+}
+
+.markdownContent ul li {
+    margin: 5px 0; /* Adds spacing between list items */
+}
+
+/* Ordered List Styles (for numbered lists) */
+.markdownContent ol {
+    margin-left: 20px; /* Adds indentation */
+}
+
+.markdownContent ol li {
+    margin: 5px 0; /* Adds spacing between list items */
+}
+
+/* Bold Text */
+.markdownContent strong {
+    font-weight: bold;
+}
+
+/* Italic Text */
+.markdownContent em {
+    font-style: italic;
+}
+
+/* Blockquote Styles */
+.markdownContent blockquote {
+    border-left: 4px solid #ccc;
+    margin: 10px 0;
+    padding-left: 20px;
+    color: #666;
+}
+
+/* Links */
+.markdownContent a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.markdownContent a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    .header {
+        font-size: 24px;
+    }
+
+    .label,
+    .input,
+    .submitButton {
+        font-size: 14px;
+    }
+
+    .submitButton {
+        padding: 12px;
+    }
+}
+/* Scoped Styles for Itinerary Page */
+
+/* Container for the entire page */
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px;
+}
+
+/* Header for the page */
+.header {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Styling for the form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Form Group (container for label and input) */
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label Styling */
+.label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Input Field Styling */
+.input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input:focus {
+    border-color: #007BFF;
+}
+
+/* Submit Button Styling */
+.submitButton {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.submitButton:hover:enabled {
+    background-color: #0056b3;
+}
+
+/* Result Section (shown after form submission) */
+.resultSection {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #e9f7fb;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header for the Result Section */
+.resultHeader {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Styling for each result text */
+.resultText {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Styling for the preformatted JSON display */
+.preFormatted {
+    font-size: 14px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    color: #333;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    .header {
+        font-size: 24px;
+    }
+
+    .label,
+    .input,
+    .submitButton {
+        font-size: 14px;
+    }
+
+    .submitButton {
+        padding: 12px;
+    }
+}

@@ -53,8 +53,9 @@ const Navbar = ({ }) => {
           <Link href="/explore">
             <button className={styles.navCom}>Explore</button>
           </Link>
-
-          <button className={styles.navCom}>Itinerary</button>
+          <Link href="/itinerary">
+            <button className={styles.navCom}>Itinerary</button>
+          </Link>
           <Link href="/social">
             <button className={styles.navCom}>Social</button>
           </Link>
