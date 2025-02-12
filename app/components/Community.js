@@ -197,7 +197,7 @@ export const CommunityTripPage = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {trips.map(trip => (
               <TripCard 
-                key={trip.id} 
+                key={trip.id}
                 trip={trip} 
                 onJoin={() => joinTrip(trip.id)} 
                 isJoined={trip.participants?.includes(user?.uid || '')}
@@ -224,7 +224,7 @@ export const CommunityTripPage = () => {
         open={isCreateModalOpen} 
         onOpenChange={setIsCreateModalOpen}
       >
-        <DialogContent className="w-full p-4">
+        <DialogContent className="w-full p-4 bg-white">
           <DialogHeader>
             <DialogTitle>Create a New Trip</DialogTitle>
           </DialogHeader>

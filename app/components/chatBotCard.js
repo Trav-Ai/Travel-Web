@@ -11,6 +11,7 @@ const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [typingText, setTypingText] = useState('');
   const messagesEndRef = useRef(null);
+  const initialized = useRef(false);
   const router = useRouter();
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -19,6 +20,30 @@ const ChatBot = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages, typingText]);
+
+  useEffect(() => {
+      if (!initialized.current) {
+        initialized.current = true;
+        const greetUser = async () => {
+          const currentHour = new Date().getHours();
+          let greeting = "";
+          
+          if (currentHour < 12) {
+            greeting = "Good morning!😊 ";
+          } else if (currentHour < 17) {
+            greeting = "Good afternoon!😊 ";
+          } else {
+            greeting = "Good evening!😊 ";
+          }
+          
+          const welcomeMessage = greeting + "I'm your AI Travel Assistant. What can I help you with today? ✈️ 🗺️ ☀️";
+          
+          await typeMessage(welcomeMessage);
+        };
+        
+        greetUser();
+      }
+    }, []);
 
   const typeMessage = async (message) => {
     setTypingText('');

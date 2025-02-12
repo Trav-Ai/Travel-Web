@@ -11,6 +11,7 @@ const ChatBotPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [typingText, setTypingText] = useState("");
   const messagesEndRef = useRef(null);
+  const initialized = useRef(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -19,6 +20,30 @@ const ChatBotPage = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages, typingText]);
+
+  useEffect(() => {
+    if (!initialized.current) {
+      initialized.current = true;
+      const greetUser = async () => {
+        const currentHour = new Date().getHours();
+        let greeting = "";
+        
+        if (currentHour < 12) {
+          greeting = "Good morning!😊 ";
+        } else if (currentHour < 17) {
+          greeting = "Good afternoon!😊 ";
+        } else {
+          greeting = "Good evening!😊 ";
+        }
+        
+        const welcomeMessage = greeting + "I'm your Travel Assistant. What can I help you with today? ✈️ 🗺️ ☀️";
+        
+        await typeMessage(welcomeMessage);
+      };
+      
+      greetUser();
+    }
+  }, []);
 
   const typeMessage = async (message) => {
     setTypingText("");
@@ -88,13 +113,13 @@ User message: ${userMessage}`;
     <AuthProvider>
       <div className="flex flex-col justify-between items-center w-full h-full">
         <Navbar />
-        <div className="container mx-auto max-w-4xl  h-[90vh] p-4 flex flex-col">
+        <div className="container mx-auto max-w-4xl h-[90vh] p-4 flex flex-col">
           <div className="bg-primary text-primary-foreground p-4 rounded-t-lg flex items-center gap-2">
             <MessageCircle size={24} />
             <h1 className="text-xl font-bold">Travel Assistant</h1>
           </div>
 
-          <div className="flex-1 overflow-auto p-4 space-y-4 bg-background border-x">
+          <div className="flex-1 overflow-auto p-4 space-y-4 bg-background border-x-2">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -142,7 +167,7 @@ User message: ${userMessage}`;
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask me anything..."
-                className="flex-1 rounded-md border p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="flex-1 rounded-md border p-3 focus:outline-none focus:ring-1 focus:ring-primary"
                 disabled={isLoading}
               />
               <button
@@ -155,7 +180,6 @@ User message: ${userMessage}`;
             </div>
           </form>
         </div>
-        <Footer/>
       </div>
     </AuthProvider>
   );
