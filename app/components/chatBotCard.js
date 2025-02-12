@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, Send, Minimize2 } from 'lucide-react';
+import { MessageCircle, Send, Minimize2, ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
 
 const ChatBot = () => {
   const [messages, setMessages] = useState([]);
@@ -10,7 +11,7 @@ const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [typingText, setTypingText] = useState('');
   const messagesEndRef = useRef(null);
-
+  const router = useRouter();
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -38,19 +39,14 @@ const ChatBot = () => {
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
 
-    // Collect the last 5 messages for context
     const recentMessages = messages.slice(-5).map(msg => `${msg.role}: ${msg.content}`).join('\n');
 
-    const prompt = `Based on the user's mood and interest, recommend an Indian tourist destination. 
-The response should follow this format:
-"I recommend visiting [Destination] for [unique feature or experience]."
-- Keep the response under 30 words when possible.
-- Include only one destination and one key feature.
+    const prompt = `Based on the user's mood and interest, recommend a tourist destination
 - If the user message is unrelated to travel, respond with:
-  "I can assist with travel recommendations only." and then answer their question
+  "I can assist with travel recommendations only."
 - If it's normal chats like greetings or godbye said that, respond normally without any template that you are the chatbot from AI travel app.
 - reply based on recent messages when applicable , also act as a chatbo and reply based on your discretion
-- you are  a chabot created by Nibil , Gayatri , Melvin , Nandana and Miss-Dhanya (always call her Dhanya miss , she is our proffessor at college) as their mentor, as a main project for btech cse final year
+- you are  a chabot created by Nibil , Gayatri , Melvin , Nandana as the main project for btech cse final year
 Chat history:
 ${recentMessages}
 
@@ -61,7 +57,7 @@ User message: ${userMessage}`;
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'llama3.2',
+          model: 'gemma2:2b',
           prompt: prompt,
           stream: false,
           options: {
@@ -84,6 +80,9 @@ User message: ${userMessage}`;
       await typeMessage("I'm sorry, I'm having trouble responding right now.");
     }
   };
+  const handleOpenFullChat = () => {
+    router.push('/chat');
+  };
 
   if (!isOpen) {
     return (
@@ -104,12 +103,21 @@ User message: ${userMessage}`;
           <MessageCircle size={16} />
           Travel Assistant
         </CardTitle>
-        <button 
-          onClick={() => setIsOpen(false)}
-          className="hover:bg-primary-foreground/10 p-1 rounded-full transition-colors"
-        >
-          <Minimize2 size={16} />
-        </button>
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={handleOpenFullChat}
+            className="hover:bg-primary-foreground/10 p-1 rounded-full transition-colors"
+            title="Open in full page"
+          >
+            <ExternalLink size={16} />
+          </button>
+          <button 
+            onClick={() => setIsOpen(false)}
+            className="hover:bg-primary-foreground/10 p-1 rounded-full transition-colors"
+          >
+            <Minimize2 size={16} />
+          </button>
+        </div>
       </CardHeader>
       
       <CardContent className="flex-1 overflow-auto p-3 space-y-4">

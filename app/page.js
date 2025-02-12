@@ -5,7 +5,7 @@ import RecommendedLocations from "./components/Locations/recLocs.js";
 import ExecuteModelButton from "./components/modelButton/modelButton";
 import LocationComponent from "./components/CurrentLocation/LocationComponent";
 import styles from "./home.module.css";
-import ChatBot from "./components/temp";
+import ChatBot from "./components/chatBotCard";
 import Navbar from "./components/NavBar/navbar";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "@/hooks/AuthContext";
@@ -60,8 +60,7 @@ export default function Home() {
   return (
     <AuthProvider>
       <Navbar />
-
-
+      
       <main className={styles.main}>
 
         <section className={styles.heroSection}>

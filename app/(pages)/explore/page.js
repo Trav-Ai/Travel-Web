@@ -101,7 +101,7 @@ export default function Explore() {
               <button className={filter === 'nearby' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('nearby')}>Nearby</button>
               <button className={filter === 'top' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('top')}>Top Rated</button>
               <button className={filter === 'beaches' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('beaches')}>Beaches</button>
-              <button className={filter === 'mountains' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('mountains')}>Mounatains</button>
+              <button className={filter === 'mountains' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('mountains')}>Mountains</button>
             </div>
 
 

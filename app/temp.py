@@ -34,7 +34,7 @@ def get_user_data(user_id):
             return user_dict
         else:
             print(f"No data found for userID: {user_id}")
-            return None
+            return None 
     except Exception as e:
         print(f"Error retrieving user data: {e}")
         return None
