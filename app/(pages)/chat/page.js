@@ -13,6 +13,8 @@ const ChatBotPage = () => {
   const messagesEndRef = useRef(null);
   const initialized = useRef(false);
 
+  const GROQ_API_KEY = process.env.NEXT_PUBLIC_GROQ_API_KEY;
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -64,41 +66,44 @@ const ChatBotPage = () => {
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setIsLoading(true);
 
-    const recentMessages = messages
-      .slice(-5)
-      .map((msg) => `${msg.role}: ${msg.content}`)
-      .join("\n");
-
-    const prompt = `Based on the user's mood and interest, recommend a tourist destination
-- If the user message is unrelated to travel, respond with:
-  "I can assist with travel recommendations only."
-- If it's normal chats like greetings or godbye said that, respond normally without any template that you are the chatbot from AI travel app.
-- reply based on recent messages when applicable , also act as a chatbo and reply based on your discretion
-- you are  a chabot created by Nibil , Gayatri , Melvin , Nandana as the main project for btech cse final year
-Chat history:
-${recentMessages}
-
-User message: ${userMessage}`;
+    const recentMessages = messages.slice(-5).map(msg => ({
+      role: msg.role,
+      content: msg.content
+    }));
 
     try {
-      const response = await fetch("http://localhost:11434/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${GROQ_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
-          model: "gemma2:2b",
-          prompt: prompt,
-          stream: false,
-          options: {
-            temperature: 0.7,
-            num_predict: 100,
-          },
-        }),
+          model: 'gemma2-9b-it',
+          messages: [
+            {
+              role: 'system',
+              content: `You are a travel assistant chatbot created by Nibil, Gayatri, Melvin, and Nandana as their BTech CSE final year project. 
+              Your primary role is to recommend tourist destinations and provide travel-related information.
+              If the query is unrelated to travel, respond with: "I can assist with travel recommendations only."
+              For general greetings or farewells, respond naturally without mentioning you're a chatbot.
+              Base your responses on the conversation history when applicable.`
+            },
+            ...recentMessages,
+            {
+              role: 'user',
+              content: userMessage
+            }
+          ],
+          temperature: 0.7,
+          max_tokens: 1000
+        })
       });
 
       if (response.ok) {
         const data = await response.json();
         setIsLoading(false);
-        await typeMessage(data.response);
+        await typeMessage(data.choices[0].message.content);
       } else {
         throw new Error("Failed to get response");
       }
