@@ -5,7 +5,6 @@ import RecommendedLocations from "./components/Locations/recLocs.js";
 import ExecuteModelButton from "./components/modelButton/modelButton";
 import LocationComponent from "./components/CurrentLocation/LocationComponent";
 import styles from "./home.module.css";
-import ChatBot from "./components/temp";
 import Navbar from "./components/NavBar/navbar";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "@/hooks/AuthContext";
@@ -13,6 +12,7 @@ import Footer from "./components/Footer/footer";
 import Cookies from "js-cookie";
 import { auth } from "@/lib/firebaseConfig";
 import Link from "next/link";
+import ChatBot from "./components/chatBotCard";
 
 
 export default function Home() {
