@@ -62,9 +62,11 @@ const ModelButton = ({ userId, onSuccess }) => { // onSuccess is passed as a pro
       } else {
         const errorData = await response.json();
         setMessage(errorData.message || 'Failed to execute the model.');
+        setLoading('false');
       }
     } catch (error) {
       setMessage(`An error occurred: ${error.message}`);
+      setLoading('false');
     } finally {
       setLoading(false);
     }

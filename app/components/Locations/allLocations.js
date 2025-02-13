@@ -10,8 +10,9 @@ import AddButton from './buttons/addButton';
 import { db } from "@/lib/firebaseConfig";
 import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { AuthProvider, useAuth } from '@/hooks/AuthContext';
+import Image from 'next/image';
 
-const AllLocation = ({ limit, currentLocation, filter, searchQuery, userID }) => {
+const AllLocation = ({ limit, currentLocation, filter, searchQuery, userID}) => {
   const [locations, setLocations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -211,7 +212,7 @@ const AllLocation = ({ limit, currentLocation, filter, searchQuery, userID }) =>
         {/*No Locaiton to recommend*/}
         {filter === 'recommended' && userID && locations.length === 0 &&
           <div>
-            No Locations to recoommned
+            No Locations to recommend
           </div>
         }
         {/*When no locations are loaded*/}
