@@ -36,7 +36,7 @@
 
 .filterButton{
   border: 1px rgb(143, 143, 143) solid;
-  padding: 7px 24px;
+  padding: 8px 24px;
   border-radius: 10px;
   font-size: 14px;
   transition: 0.1s ease-in-out;
@@ -44,7 +44,7 @@
 
 .filterButton:hover{
   border: 1px #0074D9 solid;
-  padding: 7px 24px;
+  padding: 8px 24px;
   border-radius: 10px;
   margin-top: -4px;
 }
@@ -53,7 +53,7 @@
   border: 1px #0074D9 solid;
   background-color: #0074D9;
   color: white;
-  padding: 7px 24px;
+  padding: 8px 24px;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 400;

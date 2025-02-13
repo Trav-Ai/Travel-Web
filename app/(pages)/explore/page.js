@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { auth } from "@/lib/firebaseConfig";
 import ModelButton from "@/app/components/modelButton/modelButton";
+import { useSearchParams } from 'next/navigation';
 
 export default function Explore() {
   const limit = '';
@@ -24,6 +25,14 @@ export default function Explore() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentLocation, setcurrentLocation] = useState('Thiruvananthapuram');
+
+  const category = useSearchParams().get('category');
+
+  useEffect(() => {
+    if (category) {
+      setSearchQuery(category);
+    }
+  }, [category]);
 
   // Function to handle filter change
   const handleFilterChange = (newFilter) => {
@@ -35,7 +44,7 @@ export default function Explore() {
   };
 
   const activeStyle = {
-    backgroundColor: '#0074D9', 
+    backgroundColor: '#0074D9',
     color: 'white',
     fontWeight: '400'
   };
@@ -83,6 +92,9 @@ export default function Explore() {
     }
   }, [user, userID]);
 
+  
+
+
   return (
     <AuthProvider>
       <div>
@@ -90,10 +102,13 @@ export default function Explore() {
           <Navbar />
           <ExploreBanner />
           <div className={styles.TopDestinations}>
-            <h1 className={styles.Title1}>TOP DESTINATIONS</h1>
-            <AllLocation limit='4' filter='top' userID={userID} />
+            <div>
+              <h1 className={styles.Title1}>TOP DESTINATIONS</h1>
+              <AllLocation limit='4' filter='top' userID={userID} />
+            </div>
+
           </div>
-          <SearchBar onSearch={handleSearchChange} />
+          <SearchBar onSearch={handleSearchChange} query={category} />
           {!searchQuery ? (<div>
             <div className={styles.filters}>
               <button className={filter === 'all' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('all')}>All</button>
@@ -101,7 +116,7 @@ export default function Explore() {
               <button className={filter === 'nearby' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('nearby')}>Nearby</button>
               <button className={filter === 'top' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('top')}>Top Rated</button>
               <button className={filter === 'beaches' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('beaches')}>Beaches</button>
-              <button className={filter === 'mountains' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('mountains')}>Mountains</button>
+              <button className={filter === 'mountains' ? styles.filterButtonActive : styles.filterButton} onClick={() => handleFilterChange('mountains')}>Mounatains</button>
             </div>
 
 
@@ -114,7 +129,7 @@ export default function Explore() {
               </div>
             ) : (
               <div className={styles.AllDestinations}>
-                
+
                 {/*Refresh Button*/}
                 {user && filter === 'recommended' &&
                   <ModelButton userId={userID} />
