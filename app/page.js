@@ -5,13 +5,14 @@ import RecommendedLocations from "./components/Locations/recLocs.js";
 import ExecuteModelButton from "./components/modelButton/modelButton";
 import LocationComponent from "./components/CurrentLocation/LocationComponent";
 import styles from "./home.module.css";
-import ChatBot from "./components/chatBotCard";
+import ChatBot from "./components/temp";
 import Navbar from "./components/NavBar/navbar";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "@/hooks/AuthContext";
 import Footer from "./components/Footer/footer";
 import Cookies from "js-cookie";
 import { auth } from "@/lib/firebaseConfig";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -60,7 +61,8 @@ export default function Home() {
   return (
     <AuthProvider>
       <Navbar />
-      
+
+
       <main className={styles.main}>
 
         <section className={styles.heroSection}>
@@ -75,7 +77,9 @@ export default function Home() {
             <div className={styles.heroSubtext}>
               <p>Let AI be your compass as you conquer challenges, explore new horizons and earn exciting rewards!</p>
             </div>
-            <button className={styles.roundedButton}>Start Exploring</button>
+            <Link href="/explore" passHref>
+              <button className={styles.roundedButton}>Start Exploring</button>
+            </Link>
           </div>
           <div className={styles.imageLayout}>
             <div className={styles.leftColumn}>
@@ -94,11 +98,13 @@ export default function Home() {
           <div className={styles.destinationHeader}>
             <h2>Find Popular Destinations</h2>
             <div className={styles.roundedButton}>
-              <button >Explore Destinations</button>
+              <Link href="/explore" passHref>
+                <button >Explore Destinations</button>
+              </Link>
             </div>
           </div>
           <div className={styles.destinationGrid}>
-            <AllLocation limit={4} filter={'top'} userID={userID}/>
+            <AllLocation limit={4} filter={'top'} userID={userID} />
           </div>
         </section>
 
@@ -120,24 +126,34 @@ export default function Home() {
 
           <div className={styles.categoryGrid}>
             <div className={styles.categoryCard}>
-              <img src="/images/beach.webp" alt="Beach" />
-              <h3>Beach</h3>
+              <Link href={`/explore?category=${'Beach'}`} passHref>
+                <Image src="/images/beach.webp" alt="Beach" width={200} height={200} />
+                <h3>Beach</h3>
+              </Link>
             </div>
             <div className={styles.categoryCard}>
-              <img src="/images/mountains.jpeg" alt="Hill Stations" />
-              <h3>Hill Stations</h3>
+              <Link href={`/explore?category=${'Hill Station'}`} passHref>
+                <Image src="/images/mountains.jpeg" alt="Hill Stations" width={200} height={200} />
+                <h3>Hill Stations</h3>
+              </Link>
             </div>
             <div className={styles.categoryCard}>
-              <img src="/images/cultural.jpg" alt="Cultural" />
-              <h3>Cultural</h3>
+              <Link href={`/explore?category=${'Cultural'}`} passHref>
+                <Image src="/images/cultural.jpg" alt="Cultural" width={200} height={200} />
+                <h3>Cultural</h3>
+              </Link>
             </div>
             <div className={styles.categoryCard}>
-              <img src="/images/waterfall.jpg" alt="Waterfalls" />
-              <h3>Waterfalls</h3>
+              <Link href={`/explore?category=${'Waterfalls'}`} passHref>
+                <Image src="/images/waterfall.jpg" alt="Waterfalls" width={200} height={200} />
+                <h3>Waterfalls</h3>
+              </Link>
             </div>
             <div className={styles.categoryCard}>
-              <img src="/images/nature.jpeg" alt="Nature" />
-              <h3>Nature</h3>
+              <Link href={`/explore?category=${'Waterfalls'}`} passHref>
+                <Image src="/images/nature.jpeg" alt="Forest" width={200} height={200} />
+                <h3>Nature</h3>
+              </Link>
             </div>
           </div>
         </section>
@@ -195,16 +211,18 @@ export default function Home() {
             <h1>How it works</h1>
             <h2>One click for you</h2>
 
-            <div className={styles.workCard}>
-              {/* <img src="/images/search.png" alt="Compass Icon" className={styles.workIcon} /> */}
-              <div className={styles.workNumber}><h1>1</h1></div>
-              <div className={styles.cardContent}>
-                <strong>Find Your Destination</strong>
-                <p>Embark on a journey to discover your dream destination, where adventure and relaxation await.</p>
+            <Link href="/explore" passHref>
+              <div className={styles.workCard}>
+                {/* <img src="/images/search.png" alt="Compass Icon" className={styles.workIcon} /> */}
+                <div className={styles.workNumber}><h1>1</h1></div>
+                <div className={styles.cardContent}>
+                  <strong>Find Your Destination</strong>
+                  <p>Embark on a journey to discover your dream destination, where adventure and relaxation await.</p>
+                </div>
+                {/* <img src="/images/arrow.png" alt="Arrow Icon" className={styles.arrowImg} /> */}
               </div>
-              {/* <img src="/images/arrow.png" alt="Arrow Icon" className={styles.arrowImg} /> */}
-            </div>
-
+            </Link>
+            
             <div className={styles.workCard}>
               <div className={styles.workNumber}><h1>2</h1></div>
               <div className={styles.cardContent}>

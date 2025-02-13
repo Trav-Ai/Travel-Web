@@ -44,8 +44,9 @@ const Navbar = ({ }) => {
   return (
     <AuthProvider>
       <nav className={styles.navbar}>
+      <Link href="/">
         <h1 className={styles.navTitle}>Ai Travel App</h1>
-
+      </Link>
         <div className={styles.navLinks}>
           <Link href="/">
             <button className={styles.navCom}>Home</button>
