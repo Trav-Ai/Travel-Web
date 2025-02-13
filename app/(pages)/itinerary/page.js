@@ -1,10 +1,14 @@
-'use client'; 
+'use client';
 
 import styles from './itinerary.module.css'; // Importing the CSS module
 import React, { useState } from 'react';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { marked } from 'marked';
+import Navbar from '@/app/components/NavBar/navbar';
+import { AuthProvider } from '@/hooks/AuthContext';
+import Loader from './components/loader';
+import ContentSection from './components/contentSection';
 
 
 export default function Itinerary() {
@@ -67,8 +71,8 @@ export default function Itinerary() {
                 (data.plan);
 
                 const processedContent = await remark()
-                .use(html)
-                .process(data.plan);
+                    .use(html)
+                    .process(data.plan);
                 setMarkdownContent(marked((processedContent.toString())));
 
                 setApiResponse(data); // Store the response data
@@ -86,121 +90,141 @@ export default function Itinerary() {
     };
 
     return (
-        <div className={styles.body}>
+        <AuthProvider >
+            <div className={styles.body}>
+                <Navbar />
 
-            {/* Show the form until it's submitted */}
-            {!formSubmitted && (
-                <form onSubmit={handleSubmit} className={styles.form}>
-                    <h1 className={styles.header}>Generate Itinerary</h1>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="boardingPoint" className={styles.label}>Boarding Point</label>
-                        <input
-                            type="text"
-                            id="boardingPoint"
-                            value={boardingPoint}
-                            onChange={(e) => setBoardingPoint(e.target.value)}
-                            placeholder="Enter boarding point"
-                            required
-                            className={styles.input}
-                        />
-                    </div>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="destination" className={styles.label}>Destination</label>
-                        <input
-                            type="text"
-                            id="destination"
-                            value={destination}
-                            onChange={(e) => setDestination(e.target.value)}
-                            placeholder="Enter destination"
-                            required
-                            className={styles.input}
-                        />
-                    </div>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="travelDate" className={styles.label}>Travel Date</label>
-                        <input
-                            type="date"
-                            id="travelDate"
-                            value={travelDate}
-                            onChange={(e) => setTravelDate(e.target.value)}
-                            required
-                            className={styles.input}
-                        />
-                    </div>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="returnDate" className={styles.label}>Return Date</label>
-                        <input
-                            type="date"
-                            id="returnDate"
-                            value={returnDate}
-                            onChange={(e) => setReturnDate(e.target.value)}
-                            className={styles.input}
-                        />
-                    </div>
-                    {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>} {/* Show error message */}
-                    <div className={styles.formGroup}>
-                        <button type="submit" disabled={loading} className={styles.submitButton}>
-                            {loading ? 'Generating...' : 'Generate'}
-                        </button>
-                    </div>
-                </form>
-            )}
+                {/* Show the form until it's submitted */}
+                {!formSubmitted && (
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                        <div className={styles.header}>
+                            <h1>Generate Itinerary</h1>
+                            {loading ?
+                                <div className={styles.loader}><Loader /></div>
+                                : null
+                            }
+                        </div>
+                        <div className={styles.locationField}>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="boardingPoint" className={styles.label}>Boarding Point</label>
+                                <input
+                                    type="text"
+                                    id="boardingPoint"
+                                    value={boardingPoint}
+                                    onChange={(e) => setBoardingPoint(e.target.value)}
+                                    placeholder="Enter boarding point"
+                                    autoComplete="off"
+                                    required
+                                    className={styles.input}
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="destination" className={styles.label}>Destination</label>
+                                <input
+                                    type="text"
+                                    id="destination"
+                                    value={destination}
+                                    onChange={(e) => setDestination(e.target.value)}
+                                    placeholder="Enter destination"
+                                    autoComplete="off"
+                                    required
+                                    className={styles.input}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.dateField}>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="travelDate" className={styles.label}>Travel Date</label>
+                                <input
+                                    type="date"
+                                    id="travelDate"
+                                    value={travelDate}
+                                    onChange={(e) => setTravelDate(e.target.value)}
+                                    autoComplete="off"
+                                    required
+                                    className={styles.input}
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="returnDate" className={styles.label}>Return Date</label>
+                                <input
+                                    type="date"
+                                    id="returnDate"
+                                    value={returnDate}
+                                    onChange={(e) => setReturnDate(e.target.value)}
+                                    autoComplete="off"
+                                    className={styles.input}
+                                />
+                            </div>
+                        </div>
+                        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>} {/* Show error message */}
+                        <div className={styles.formGroup}>
+                            <button type="submit" disabled={loading} className={styles.submitButton}>
+                                {loading ? 'Generating Itinerary...' : 'Generate Itinerary'}
+                            </button>
+                        </div>
+                    </form>
+                )}
 
 
-            {/* Display the results after form submission */}
-            {formSubmitted && apiResponse && (
-                <div className={styles.resultSection}>
-                    <h2 className={styles.resultHeader}>Itinerary Details</h2>
-
-                    {/* Display Weather Data */}
-                    {apiResponse.weather_data && (
-                        <div className={styles.weatherData}>
-                            <h1>Weather Information</h1>
+                {/* Display the results after form submission */}
+                {formSubmitted && apiResponse && (
+                    <div className={styles.resultSection}>
+                        <div className={styles.resultHeader}>
+                            <h1>Itinerary Details</h1>
                             <h5><b>Location:</b> {apiResponse.weather_data.resolvedAddress}</h5>
-                            <table className="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Current Weather Conditions</th>
-                                        <th>Max Temperature (in °C)</th>
-                                        <th>Min Temperature (in °C)</th>
-                                        <th>Precipitation Probability</th>
-                                        <th>Humidity</th>
-                                        <th>Weather Alerts</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {apiResponse.weather_data.days.map((weather_data_item, index) => (
-                                        <tr key={index}>
-                                            <td>{weather_data_item.datetime}</td>
-                                            <td>{weather_data_item.conditions}</td>
-                                            <td>{weather_data_item.tempmax}</td>
-                                            <td>{weather_data_item.tempmin}</td>
-                                            <td>{weather_data_item.precipprob}</td>
-                                            <td>{weather_data_item.humidity}</td>
-                                            <td>{weather_data_item.description}</td>
+                        </div>
+                        {/* Display Weather Data */}
+                        {apiResponse.weather_data && (
+                            <div className={styles.weatherData}>
+                                <h1>Weather Information</h1>
+
+                                <table className="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Travel Dates</th>
+                                            <th>Current Weather Conditions</th>
+                                            <th>Max Temperature (in °C)</th>
+                                            <th>Min Temperature (in °C)</th>
+                                            <th>Precipitation Probability</th>
+                                            <th>Humidity</th>
+                                            <th>Weather Alerts</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
+                                    </thead>
+                                    <tbody>
+                                        {apiResponse.weather_data.days.map((weather_data_item, index) => (
+                                            <tr key={index}>
+                                                <td>{weather_data_item.datetime}</td>
+                                                <td>{weather_data_item.conditions}</td>
+                                                <td>{weather_data_item.tempmax}</td>
+                                                <td>{weather_data_item.tempmin}</td>
+                                                <td>{weather_data_item.precipprob}</td>
+                                                <td>{weather_data_item.humidity}</td>
+                                                <td>{weather_data_item.description}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
 
 
-                    {/* Display Plan */}
-                    {apiResponse.plan && (
-                        <div className={styles.planData}>
-                        <h3 className={styles.planHeader}>Personalized Trip Itinerary</h3>
-                        
-                        {/* Markdown content rendered using react-markdown */}
-                        <div className={styles.markdownContent}  dangerouslySetInnerHTML={{ __html: markdownContent }}>
-                        </div>
+                        {/* Display Plan */}
+                        {apiResponse.plan && (
+                            <div className={styles.planData}>
+                                <h3 className={styles.planHeader}>Personalized Trip Itinerary</h3>
+
+                                {/* Markdown content rendered using react-markdown */}
+                                <div className={styles.markdownContent} dangerouslySetInnerHTML={{ __html: markdownContent }}>
+                                </div>
+                            </div>
+                        )}
+                        <ContentSection />
                     </div>
+                )}
 
-                    )}
-                </div>
-            )}
 
-        </div>
+            </div>
+        </AuthProvider>
     );
 }

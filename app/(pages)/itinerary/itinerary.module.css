@@ -1,6 +1,6 @@
 /* Scoped Styles for Itinerary Page */
 
-.body{
+.body {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -10,62 +10,84 @@
 
 /* Header for the page */
 .header {
-    text-align: center;
+    display: flex;
+    text-align: left;
     font-size: 28px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     color: #333;
+    justify-content: space-between;
+}
+
+.loader {
+    transform: scale(.5);
 }
 
 /* Styling for the form */
 .form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    max-width: 600px;
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 550px;
+    background-color: var(--background-color);
+    padding: 50px 50px;
+    padding-bottom: 40px;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
     width: 100%;
-    margin: 20px;
+    margin: 55px 20px;
+    gap: 25px;
 }
 
 /* Form Group (container for label and input) */
 .formGroup {
     display: flex;
+    gap: 4px;
     flex-direction: column;
+}
+
+.locationField {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.dateField {
+    display: flex;
+    gap: 15px;
 }
 
 /* Label Styling */
 .label {
-    font-size: 16px;
-    font-weight: bold;
-    color: #555;
+    font-size: 15px;
+    font-weight: 300;
+    color: #595959;
 }
 
 /* Input Field Styling */
 .input {
-    padding: 10px;
+    padding: 10px 15px;
     font-size: 16px;
-    border: 1px solid #ddd;
+    border: 1px solid #a4a4a4;
     border-radius: 5px;
     outline: none;
+    background-color: var(--background-color);
     transition: border-color 0.3s ease;
+    width: clamp(200px, 15vw, 250px)
 }
 
 .input:focus {
-    border-color: #007BFF;
+    border-color: #000409;
 }
 
 /* Submit Button Styling */
 .submitButton {
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
-    background-color: #007BFF;
+    background-color: var(--foreground);
     color: white;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    margin-top: 10px;
     transition: background-color 0.3s ease;
 }
 
@@ -75,41 +97,129 @@
 }
 
 .submitButton:hover:enabled {
-    background-color: #0056b3;
+    background-color: #007BFF;
 }
+
+
+
+
+
+
+
 
 /* Result Section (shown after form submission) */
 .resultSection {
-    margin: 20px 200px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 140px;
+    width: 77vw;
 }
 
 /* Header for the Result Section */
+
 .resultHeader {
-    font-size: 22px;
-    margin-bottom: 15px;
-    color: #333;
+    margin-bottom: 25px;
 }
 
-.planData {
-    padding: 20px;
-    border-radius: 8px;
+.resultHeader h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--foreground-color);
+}
+
+.resultHeader h5 {
+    font-size: 16px;
+}
+
+
+
+.weatherData {
+    user-select: none;
+}
+
+.weatherData h1 {
+    font-size: 25px;
+    font-weight: 600;
     margin-bottom: 20px;
+    color: #333;
+
 }
 
-.planHeader {
-    font-size: 1.8rem; /* Larger font size for the heading */
+
+.weatherData table {
+
+    margin: 20px 0;
+    padding: 25px 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 20px 0px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    user-select: text;
+}
+
+
+.weatherData table th,
+.weatherData table td {
+    padding: 12px 10px;
+    text-align: left;
+    font-size: 1rem;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+
+}
+
+.weatherData table th {
+    border-bottom: 1px solid #2a2a2a;
     font-weight: bold;
-    color: #333;
-    margin-bottom: 15px; /* Space below the heading */
 }
+
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table td {
+    font-size: 1rem;
+}
+
+.weatherData .table th,
+.weatherData .table td {
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.weatherData .table td {
+    background-color: #fafafa;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.weatherData .table td:hover {
+    background-color: #e6e6e6;
+}
+
+.weatherData .table .condition-cell {
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.weatherData .weather-alerts {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #d9534f;
+    text-align: center;
+}
+
+
+
+
+
 .planData {
-    padding: 20px;
-    background-color: #f9f9f9;
+    margin-top: 80px;
     border-radius: 8px;
-    margin-bottom: 20px;
+    width: 100%;
 }
 
 .planHeader {
@@ -117,17 +227,23 @@
     font-weight: bold;
     color: #333;
     margin-bottom: 15px;
+  
 }
+
+
 
 /* General styles for markdown rendering */
 .markdownContent {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    margin: 20px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    border-radius: 8px;
+    padding: 40px 50px;
+
 }
 
 /* Heading Styles */
-.markdownContent h1,
+.markdownContent h1
 .markdownContent h2,
 .markdownContent h3,
 .markdownContent h4,
@@ -139,26 +255,32 @@
 
 /* Paragraph Styles */
 .markdownContent p {
-    margin: 10px 0;
+    margin-top: 25px;
+    font-size: 22px;
+    padding-bottom: 20px;
+    
+
 }
 
 /* Unordered List Styles (for bullet points) */
 .markdownContent ul {
-    list-style-type: disc; /* Ensures bullet points */
-    margin-left: 20px; /* Adds indentation */
+    list-style-type: disc;
+    margin-left: 30px;
+    color: #333;
+    font-size: 16px;
 }
 
 .markdownContent ul li {
-    margin: 5px 0; /* Adds spacing between list items */
+    margin: 10px 0;
 }
 
 /* Ordered List Styles (for numbered lists) */
 .markdownContent ol {
-    margin-left: 20px; /* Adds indentation */
+    margin-left: 20px;
 }
 
 .markdownContent ol li {
-    margin: 5px 0; /* Adds spacing between list items */
+    margin: 5px 0;
 }
 
 /* Bold Text */
@@ -192,6 +314,8 @@
 
 
 
+
+
 /* Responsive Design for Smaller Screens */
 @media (max-width: 600px) {
     .container {
@@ -212,114 +336,8 @@
         padding: 12px;
     }
 }
-/* Scoped Styles for Itinerary Page */
 
-/* Container for the entire page */
-.container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
-    margin: 20px;
-}
 
-/* Header for the page */
-.header {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-/* Styling for the form */
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Form Group (container for label and input) */
-.formGroup {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Label Styling */
-.label {
-    font-size: 16px;
-    font-weight: bold;
-    color: #555;
-}
-
-/* Input Field Styling */
-.input {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.input:focus {
-    border-color: #007BFF;
-}
-
-/* Submit Button Styling */
-.submitButton {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.submitButton:disabled {
-    background-color: #aaa;
-    cursor: not-allowed;
-}
-
-.submitButton:hover:enabled {
-    background-color: #0056b3;
-}
-
-/* Result Section (shown after form submission) */
-.resultSection {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #e9f7fb;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Header for the Result Section */
-.resultHeader {
-    font-size: 22px;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-/* Styling for each result text */
-.resultText {
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: #555;
-}
-
-/* Styling for the preformatted JSON display */
-.preFormatted {
-    font-size: 14px;
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-    color: #333;
-}
 
 /* Responsive Design for Smaller Screens */
 @media (max-width: 600px) {
