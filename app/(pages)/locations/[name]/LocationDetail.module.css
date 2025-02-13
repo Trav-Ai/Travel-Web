@@ -1,52 +1,515 @@
-/* Location Detail Page styles */
-.locationDetail {
-  background-color: #181818; /* Dark background for the detail page */
-  color: #e0e0e0; /* Light text */
-  padding: 30px;
-  border-radius: 8px;
-  max-width: 900px;
-  margin: 20px auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  user-select: none;
 }
 
-.locationDetail h1 {
-  font-size: 2.5rem;
-  color: #bb86fc; /* Light purple for the title */
-  margin-bottom: 20px;
+.locationContent {
+
 }
 
-.locationDetail img {
-  max-width: 100%;
+.mainContentWrapper {
+  display: flex;
+  gap: 60px;
+  padding: 24px;
+}
+
+.imageSection {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+  overflow: hidden;
+}
+
+.mainImage {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.mainImage:hover {
+  transform: scale(0.99);
+  transition: 0.1s ease;
+
+}
+
+.subImages {
+  margin-top: 13px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 15px;
+}
+
+.subImageContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.subImage {
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.subImage:hover{
+  transform: translateY(-5px);
+  transition: 0.1s ease;
+} 
+
+.subImage:active{
+  transform: scale(0.90);
+  transition: 0.5s ease; /* Slight zoom effect when hovering */
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.modalContent {
+  position: relative;
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.enlargedImage {
+  width: 600px;
   height: auto;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  border-radius: 12px;
 }
 
-.locationDetail p {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
+.closeButton {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  background: none;
+  border: none;
+  color: rgb(255, 255, 255);
+  font-size: 32px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  user-select: none;
 }
 
-.locationDetail strong {
-  font-weight: bold;
-  color: #bb86fc; /* Purple color for strong tags */
+.closeButton:hover {
+  opacity: 0.7; /* Slight fade effect on hover */
 }
 
-/* Error message styling */
-.errorMessage {
-  background-color: #ff4433; /* Red background for error */
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+
+/* Details Section */
+.detailsSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  gap:10px;
+  user-select: text;
 }
 
-.errorMessage h2 {
-  font-size: 2rem;
-  margin-bottom: 10px;
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #111827;
 }
 
-.errorMessage p {
+.location {
   font-size: 1.1rem;
+  margin-top: -10px;
+  color: #6b7280;
+}
+
+.description {
+  color: var(--foreground);
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+.category {
+  color: var(--foreground);
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  
+}
+
+.rating span {
+  margin-right: 5px; 
+}
+
+.stars{
+  margin-left: 15px;
+  padding-bottom: 2px;
+  font-size: 25px;
+  text-wrap: nowrap;
+  color: #fbbf24;
+}
+
+
+/* Action Buttons */
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.iconButton {
+  padding: 8px;
+  border: none;
+  background: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.iconButton:hover {
+  background-color: #f3f4f6;
+}
+
+
+/* Update the liked and heartFilled styles */
+.liked {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.heartFilled {
+  color: #ef4444;
+  fill: #ef4444;
+}
+
+.roundedButton {
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--foreground);
+  font-size: 14px;
+  color: white;
+  height: 50px;
+  padding: 0 30px;
+  border-radius: 10px;
+  transition: background-color 0.1s ease;
+}
+
+.roundedButton:hover {
+  background-color: var(--primary-color);
+}
+
+.roundedButton:active {
+  transition: 0.2s ease;
+  transform: scale(0.95);
+}
+
+/* Reviews Section */
+.reviewsSection {
+  border-top: 1px solid #e5e7eb;
+  padding: 24px;
+}
+
+.reviewsTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #111827;
+}
+
+.reviewsContent {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+/* Rating Bars */
+.ratingBars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ratingBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+  width: 100px;
+}
+
+.star {
+  color: #d1d5db;
+}
+
+.starFilled {
+  color: #fbbf24;
+  fill: #fbbf24;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #fbbf24;
+  border-radius: 9999px;
+}
+
+/* Add Comment Section */
+.addComment {
+  flex: 1;
+  background-color: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.commentTitle {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.textarea {
+  width: 100%;
+  height: 120px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  resize: none;
+  margin-bottom: 12px;
+  background-color: white;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.commentActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ratingStars {
+  display: flex;
+  gap: 4px;
+}
+
+.submitButton {
+  background-color: #0b0c0e;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background-color: #303236;
+}
+
+/* Individual Review */
+.review {
+  display: flex;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+}
+
+.reviewContent {
+  flex: 1;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.reviewHeader h4 {
+  font-weight: 600;
+  color: #111827;
+}
+
+.reviewHeader span {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.reviewStars {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.helpfulButton {
+  margin-top: 12px;
+  padding: 6px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: none;
+  color: #6b7280;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.helpfulButton:hover {
+  background-color: #f3f4f6;
+}
+
+/* Error and Loading States */
+.errorMessage {
+  background-color: #fee2e2;
+  border-radius: 8px;
+  padding: 16px;
+  color: #dc2626;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .mainContentWrapper {
+    flex-direction: column;
+  }
+
+  .imageSection,
+  .detailsSection {
+    width: 100%;
+  }
+
+  .reviewsContent {
+    flex-direction: column;
+  }
+
+  .ratingBars,
+  .addComment {
+    width: 100%;
+  }
+
+  .mainImage {
+    height: 250px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 16px;
+  }
+
+  .mainImage {
+    height: 200px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .actionButtons {
+    flex-wrap: wrap;
+  }
+
+  .generateButton {
+    width: 100%;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .reviewsSection {
+    padding: 16px;
+  }
+
+  .reviewsTitle {
+    font-size: 1.25rem;
+  }
+
+  .review {
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .reviewHeader h4 {
+    font-size: 0.875rem;
+  }
+
+  .reviewHeader span {
+    font-size: 0.75rem;
+  }
+
+  .helpfulButton {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
+  }
+
+  .mainImage {
+    height: 180px;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .location {
+    font-size: 1rem;
+  }
+
+  .description {
+    font-size: 0.875rem;
+  }
+
+  .category {
+    font-size: 0.875rem;
+  }
+
+  .textarea {
+    height: 100px;
+  }
 }
