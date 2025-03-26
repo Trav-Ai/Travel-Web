@@ -9,6 +9,8 @@ import Image from 'next/image';
 const ModelButton = ({ userId, onSuccess }) => { // onSuccess is passed as a prop
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const api = 'http://127.0.0.1:5000';
+  // const api = '//13.126.69.100:5000';
 
   const handleModelExecution = async () => {
     setLoading(true);
@@ -42,7 +44,7 @@ const ModelButton = ({ userId, onSuccess }) => { // onSuccess is passed as a pro
 
 
       // Send POST request to Flask API with user_id
-      const response = await fetch('//13.126.69.100:5000/execute-model', {
+      const response = await fetch(`${api}/execute-model`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -23,6 +23,9 @@ export default function Itinerary() {
 
     const [markdownContent, setMarkdownContent] = useState();
 
+    const api = 'http://127.0.0.1:5000';
+    // const api = '//13.126.69.100:5000';
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -57,7 +60,7 @@ export default function Itinerary() {
 
         try {
             // Make API call to the backend (replace with your backend URL)
-            const response = await fetch('//13.126.69.100:5000/generateItinerary', {
+            const response = await fetch(`${api}/generateItinerary`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -216,6 +219,7 @@ export default function Itinerary() {
 
                                 {/* Markdown content rendered using react-markdown */}
                                 <div className={styles.markdownContent} dangerouslySetInnerHTML={{ __html: markdownContent }}>
+                                    {console.log(markdownContent)}
                                 </div>
                             </div>
                         )}
