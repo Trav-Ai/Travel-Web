@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { db, storage } from '@/lib/firebaseConfig';
 import { 
   collection, addDoc, query, where, orderBy, 
-  getDocs, updateDoc, deleteDoc, doc, increment 
+  getDocs, updateDoc, deleteDoc, doc, arrayUnion, 
+  arrayRemove, increment 
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { set } from 'date-fns';
 
 export const usePosts = (userId) => {
   const [posts, setPosts] = useState([]);
@@ -20,28 +20,33 @@ export const usePosts = (userId) => {
 
   const fetchPosts = async () => {
     try {
-      const postsQuery = query(
+      setLoading(true);
+      // Fetch user's own posts
+      const userPostsQuery = query(
         collection(db, 'posts'),
         where('userId', '==', userId),
         orderBy('createdAt', 'desc')
       );
-      const snapshot = await getDocs(postsQuery);
-      const postsData = snapshot.docs.map(doc => ({
+      const userPostsSnapshot = await getDocs(userPostsQuery);
+      const userPostsData = userPostsSnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
-      const feedpostsQuery = query(
+
+      // Fetch posts from other users for feed
+      const feedPostsQuery = query(
         collection(db, 'posts'),
         where('userId', '!=', userId),
         orderBy('createdAt', 'desc')
       );
-      const feedsnapshot = await getDocs(feedpostsQuery);
-      const feedpostsData = feedsnapshot.docs.map(doc => ({
+      const feedPostsSnapshot = await getDocs(feedPostsQuery);
+      const feedPostsData = feedPostsSnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
-      setPosts(postsData);
-      setFeedPosts(feedpostsData);
+
+      setPosts(userPostsData);
+      setFeedPosts(feedPostsData);
     } catch (error) {
       console.error('Error fetching posts:', error);
     } finally {
@@ -85,12 +90,16 @@ export const usePosts = (userId) => {
   const likePost = async (postId) => {
     try {
       const postRef = doc(db, 'posts', postId);
-      const post = posts.find(p => p.id === postId);
-      const likes = post.likes.includes(userId)
-        ? post.likes.filter(id => id !== userId)
-        : [...post.likes, userId];
       
-      await updateDoc(postRef, { likes });
+      // Determine whether to add or remove like
+      await updateDoc(postRef, {
+        likes: userId ? (
+          arrayUnion(userId)
+        ) : (
+          arrayRemove(userId)
+        )
+      });
+
       await fetchPosts();
     } catch (error) {
       console.error('Error liking post:', error);
@@ -100,17 +109,24 @@ export const usePosts = (userId) => {
 
   const addComment = async (postId, text) => {
     try {
+      if (!userId) {
+        throw new Error('User must be logged in to comment');
+      }
+
       const postRef = doc(db, 'posts', postId);
+      
+      // Create comment object
       const comment = {
         userId,
         text,
         createdAt: new Date().toISOString()
       };
-      
+
+      // Add comment to the post's comments array
       await updateDoc(postRef, {
-        comments: increment(1)
+        comments: arrayUnion(comment)
       });
-      
+
       await fetchPosts();
     } catch (error) {
       console.error('Error adding comment:', error);
@@ -118,5 +134,12 @@ export const usePosts = (userId) => {
     }
   };
 
-  return { posts,feedPosts, loading, createPost, likePost, addComment };
+  return { 
+    posts, 
+    feedPosts, 
+    loading, 
+    createPost, 
+    likePost, 
+    addComment 
+  };
 };

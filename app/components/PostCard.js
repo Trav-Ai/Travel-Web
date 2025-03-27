@@ -13,31 +13,36 @@ const PostCard = ({ post, onLike, onComment }) => {
   const [newComment, setNewComment] = useState("");
   const { user } = useAuth();
   
-  // Ensure post.comments is always an array
-  const comments = Array.isArray(post.comments) ? post.comments : [];
+  // Ensure post properties are always arrays or strings
   const likes = Array.isArray(post.likes) ? post.likes : [];
-  const isLiked = likes.includes(user?.uid);
+  const comments = Array.isArray(post.comments) ? post.comments : [];
+  
+  // Check if current user has liked the post
+  const isLiked = user ? likes.includes(user.uid) : false;
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
-    if (!newComment.trim()) return;
+    if (!newComment.trim() || !user) return;
 
-    await onComment(post.id, newComment);
-    setNewComment("");
+    try {
+      await onComment(post.id, newComment);
+      setNewComment("");
+    } catch (error) {
+      console.error("Failed to add comment", error);
+    }
   };
 
   return (
     <Card className="overflow-hidden">
-      <CardHeader  className="flex flex-row items-center gap-4 ">
-        <a href={`/profile/${post.userId}`} className="flex flex-row items-center gap-4 ">
-        <Avatar>
-          <AvatarImage src={post.userPhotoURL} alt={post.username || 'User'} />
-          <AvatarFallback>{post.username?.[0]?.toUpperCase() || 'U'}</AvatarFallback>
-        </Avatar>
-        <div className="flex-1">
-          <p className="font-medium">{post.username || 'Anonymous'}</p>
-          
-        </div>
+      <CardHeader className="flex flex-row items-center gap-4">
+        <a href={`/profile/${post.userId}`} className="flex flex-row items-center gap-4">
+          <Avatar>
+            <AvatarImage src={post.userPhotoURL} alt={post.username || 'User'} />
+            <AvatarFallback>{post.username?.[0]?.toUpperCase() || 'U'}</AvatarFallback>
+          </Avatar>
+          <div className="flex-1">
+            <p className="font-medium">{post.username || 'Anonymous'}</p>
+          </div>
         </a>
       </CardHeader>
 
@@ -56,8 +61,9 @@ const PostCard = ({ post, onLike, onComment }) => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onLike(post.id)}
+            onClick={onLike}
             className={isLiked ? "text-red-500" : ""}
+            disabled={!user}
           >
             <Heart className={`h-5 w-5 ${isLiked ? "fill-current" : ""}`} />
             <span className="ml-2">{likes.length}</span>
@@ -104,9 +110,9 @@ const PostCard = ({ post, onLike, onComment }) => {
                     {comment.createdAt && (
                       <p className="text-xs text-gray-500">
                         {formatDistanceToNow(
-                          typeof comment.createdAt === 'object' 
-                            ? comment.createdAt.toDate() 
-                            : new Date(comment.createdAt),
+                          typeof comment.createdAt === 'string' 
+                            ? new Date(comment.createdAt)
+                            : comment.createdAt,
                           { addSuffix: true }
                         )}
                       </p>
@@ -116,21 +122,23 @@ const PostCard = ({ post, onLike, onComment }) => {
               ))}
             </div>
 
-            <form onSubmit={handleSubmitComment} className="flex gap-2">
-              <Input
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Add a comment..."
-                className="flex-1"
-              />
-              <Button
-                type="submit"
-                variant="secondary"
-                disabled={!newComment.trim()}
-              >
-                Post
-              </Button>
-            </form>
+            {user && (
+              <form onSubmit={handleSubmitComment} className="flex gap-2">
+                <Input
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Add a comment..."
+                  className="flex-1"
+                />
+                <Button
+                  type="submit"
+                  variant="secondary"
+                  disabled={!newComment.trim()}
+                >
+                  Post
+                </Button>
+              </form>
+            )}
           </div>
         )}
       </CardContent>

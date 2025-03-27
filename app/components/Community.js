@@ -313,7 +313,7 @@ const TripCard = ({ trip, onJoin, isJoined }) => {
       <div className="flex items-center gap-4 mb-4">
         <Avatar>
           <AvatarFallback>
-            {trip.name[0].toUpperCase()}
+            {trip.name[0]?trip.name[0].toUpperCase():""}
           </AvatarFallback>
         </Avatar>
         <div>
