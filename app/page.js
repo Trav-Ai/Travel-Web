@@ -31,7 +31,8 @@ export default function Home() {
           if (user) {
             setUser(user);
             setUserID(user.uid);
-            console.log('User is authenticated:', user.uid);
+            // console.log('User is authenticated:', user.uid);
+            console.log('User is authenticated:');
           } else {
             setUser(null);
             console.log('No user is authenticated.');

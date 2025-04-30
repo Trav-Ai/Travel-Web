@@ -15,6 +15,7 @@ const ChatBot = () => {
   const router = useRouter();
 
   const GROQ_API_KEY = process.env.NEXT_PUBLIC_GROQ_API_KEY;
+  console.log(GROQ_API_KEY);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
