@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { auth } from "@/lib/firebaseConfig";
 import ModelButton from "@/app/components/modelButton/modelButton";
 import { useSearchParams } from 'next/navigation';
+import ChatBot from "@/app/components/chatBotCard";
 
 export default function Explore() {
   const limit = '';
@@ -146,6 +147,8 @@ export default function Explore() {
           }
         </main>
       </div>
+
+      <ChatBot />
     </AuthProvider>
   );
 }

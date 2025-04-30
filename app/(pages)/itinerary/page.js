@@ -57,7 +57,7 @@ export default function Itinerary() {
 
         try {
             // Make API call to the backend (replace with your backend URL)
-            const response = await fetch('//13.126.69.100:5000/generateItinerary', {
+            const response = await fetch('http://127.0.0.1:5000/generateItinerary', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

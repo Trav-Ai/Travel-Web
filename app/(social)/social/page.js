@@ -1,4 +1,5 @@
 "use client";
+import NavBar from "@/app/components/NavBar/navbar";
 import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import {
   Home,
@@ -31,7 +32,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
+}
+from "@/components/ui/dialog";
 import { toast, useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,6 +49,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CreatePostModal } from "@/app/components/CreatePostModal";
 import { EditProfileModal } from "@/app/components/EditProfileModal";
 import { CommunityTripPage } from "@/app/components/Community";
+import ChatBot from "@/app/components/chatBotCard";
 
 
 
@@ -311,7 +314,7 @@ const SearchModal = ({ open, onOpenChange }) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="bg-white">
         <DialogHeader>
           <DialogTitle>Search</DialogTitle>
         </DialogHeader>
